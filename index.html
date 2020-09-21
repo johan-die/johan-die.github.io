@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="None">
+  
+  
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Spring Boot</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> Spring Boot</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#objectifs-du-cours">Objectifs du cours</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notions-et-definitions">Notions et définitions</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#microservice">Microservice</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rest">REST</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mvc">MVC</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pourquoi-spring-boot">Pourquoi Spring Boot?</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#outil-configuration-spring-boot">Outil configuration spring boot</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#hello-rest-world">Hello REST World</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#prerequis">Prérequis</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fichier-de-build">Fichier de build</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#classe-de-lancement-comexampledemodemoapplication">Classe de lancement: com.example.demo.DemoApplication</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#le-controleur-comexamplespringboothellocontroller">Le contrôleur com.example.springboot.HelloController</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lancement">Lancement</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tests-manuels">Tests manuels</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tests-unitaires-junit">Tests unitaires Junit</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="TP1/">TP1</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="about/">About</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">Spring Boot</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="spring-boot">Spring Boot</h1>
+<h2 id="objectifs-du-cours">Objectifs du cours</h2>
+<ul>
+<li>Découverte et utilisation de microservices</li>
+<li>Utiliser JPA pour communiquer avec des bases de données</li>
+<li>Valider et sécuriser les données</li>
+<li>Gestion d'erreurs</li>
+</ul>
+<h2 id="notions-et-definitions">Notions et définitions</h2>
+<h3 id="microservice">Microservice</h3>
+<p>Les microservices sont une technique de développement logiciel — une variante de l'architecture orientée services (SOA) — qui structure une application comme un ensemble de services faiblement couplés. Les microservices indépendants communiquent les uns avec les autres en utilisant des API indépendantes du langage de programmation.</p>
+<p><img alt="compare" src="monolithic-vs-microservices.png" /></p>
+<p>Des API REST sont souvent employées pour relier chaque microservice aux autres. Un avantage avancé est que lors d'un besoin critique de mise à jour d'une ressource, seul le microservice contenant cette ressource sera mis à jour, l'ensemble de l'application restant compatible avec la modification, contrairement à la totalité de l'application dans une architecture classique.</p>
+<h3 id="rest">REST</h3>
+<p>Rappels rapide REST:</p>
+<p>REST (pour REpresentational State Transfer) ne décrit pas une implémentation mais un style d’architecture qui suit différents principes :</p>
+<ul>
+<li><strong>client-serveur</strong>: les responsabilités sont séparées entre le client et le serveur. L’interface utilisateur est séparée de celle du stockage des données. Cela permet aux deux d’évoluer indépendamment (contrairement à des applications qui réalisent des requêtes directement en base de données par exemple…).</li>
+<li><strong>sans état</strong>: la requête envoyée par le client doit être auto-suffisante : ne pas nécessiter de sauvegarder un état sur le serveur</li>
+<li><strong>mise en cache</strong> : la possibilité pour le serveur de spécifier les réponses pouvant être mises en cache</li>
+<li><strong>une interface uniforme</strong> : chaque ressource est identifiée unitairement, les ressources ont des représentations définies</li>
+<li><strong>un système hiérarchisé par couche</strong>: les états de l’application sont représentés par des ressources individuelles. L’ensemble de l’information n’est pas envoyée dans une ressource unique.</li>
+</ul>
+<p>À noter qu’on assimile « API REST » avec l’application de ce style d’architecture sur le protocole HTTP et en utilisant le format d’échange de données JSON.
+Avec le protocole HTTP définit les méthodes suivantes: <strong>GET</strong>, <strong>POST</strong>, <strong>PUT</strong>, <strong>PATCH</strong> et <strong>DELETE</strong>.</p>
+<p>Exemple: Ressource collection, telle que <a href="">http://api.exemple.com/collection/</a></p>
+<ul>
+<li><strong>GET</strong>: Récupère les URI des ressources membres de la ressource collection dans le corps de la réponse.</li>
+<li><strong>POST</strong>: Crée une ressource membre dans la ressource collection en utilisant les instructions du corps de la requête. L'URI de la ressource membre créée est attribué automatiquement et retourné dans le champ d'en-tête Location de la réponse.</li>
+<li><strong>PUT</strong>: Remplace toutes les représentations des ressources membres de la ressource collection par la représentation dans le corps de la requête, ou crée la ressource collection si elle n'existe pas.</li>
+<li><strong>PATCH</strong> :Met à jour toutes les représentations des ressources membres de la ressource collection en utilisant les instructions du corps de la requête, ou crée éventuellement la ressource collection si elle n'existe pas.</li>
+<li><strong>DETELE</strong>: Supprime toutes les représentations des ressources membres de la ressource collection.</li>
+</ul>
+<p>Plus d'infos: <a href="https://fr.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP</a>, <a href="https://fr.wikipedia.org/wiki/Representational_state_transfer">REST</a></p>
+<h3 id="mvc">MVC</h3>
+<p><img alt="MVC" src="MVC.png" /></p>
+<h3 id="pourquoi-spring-boot">Pourquoi Spring Boot?</h3>
+<p><em>Définition</em> : <strong>Spring</strong> est un Framework de développement d'applications Java, qui apporte plusieurs fonctionnalités comme Spring Security, SpringMVC, Spring Batch, Spring Data, etc. Ces Frameworks ont pour objectif de faciliter la tâche aux développeurs. Malheureusement, leurs mises en œuvre deviennent très complexes à travers les fichiers de configuration XML qui ne cessent de grossir, et une gestion des dépendances fastidieuse. C'est pour répondre à cette inquiétude que le projet Spring Boot a vu le jour.</p>
+<p><em>Définition</em> : <strong>Spring Boot</strong> est un sous projet de Spring qui vise à rendre Spring plus facile d'utilisation en élimant plusieurs étapes de configuration. L'objectif de Spring Boot est de permettre aux développeurs de se concentrer sur des tâches techniques et non des tâches de configurations, de déploiements, etc. Ce qui a pour conséquences un gain de temps et de productivité.</p>
+<p>Spring Boot apporte à Spring une très grande simplicité d'utilisation :</p>
+<ul>
+<li>Il facilite notamment la création, la configuration et le déploiement d'une application complète. On n'a plus besoin des fichiers XML à configurer (pas besoin du fichier du descripteur de déploiement web.xml dans le cas d'une application web).</li>
+<li>Spring Boot permet de déployer très facilement une application dans plusieurs environnements sans avoir à écrire des scripts. Pour ce faire, une simple indication de l'environnement (développement ou production) dans le fichier de propriétés (.properties) suffit à déployer l'application dans l'un ou l'autre environnement. Ceci est rendu possible grâce à la notion de profil à déclarer toujours dans le fichier de propriétés.</li>
+<li>Spring Boot possède un serveur d'application Tomcat embarqué afin de faciliter le déploiement d'une application web. Il est possible d'utiliser un serveur autre ou externe, grâce à une simple déclaration dans le fichier pom.xml.</li>
+<li>Spring Boot permet de mettre en place un suivi métrique de l'application une fois déployée sur le serveur afin de suivre en temps réel l'activité du serveur, ceci grâce à spring-boot-starter-actuator.</li>
+</ul>
+<h3 id="outil-configuration-spring-boot">Outil configuration spring boot</h3>
+<p>Le site <a href="https://start.spring.io/">start.spring.io</a> permet de générer l'ensemble des dépendances du projet et créé le squelette de l'application.</p>
+<p><img alt="initializr" src="initializr.png" /></p>
+<h2 id="hello-rest-world">Hello REST World</h2>
+<h3 id="prerequis">Prérequis</h3>
+<ul>
+<li>Java 1.8</li>
+<li>Maven</li>
+<li><a href="https://spring.io/tools">Spring Tool Suite</a></li>
+<li>Git</li>
+<li>Linux?</li>
+</ul>
+<h3 id="fichier-de-build">Fichier de build</h3>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;2.3.3.RELEASE&lt;/version&gt;
+        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;
+    &lt;/parent&gt;
+    &lt;groupId&gt;com.example&lt;/groupId&gt;
+    &lt;artifactId&gt;demo&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;demo&lt;/name&gt;
+    &lt;description&gt;Demo project for Spring Boot&lt;/description&gt;
+
+    &lt;properties&gt;
+        &lt;java.version&gt;1.8&lt;/java.version&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+            &lt;exclusions&gt;
+                &lt;exclusion&gt;
+                    &lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;
+                    &lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;
+                &lt;/exclusion&gt;
+            &lt;/exclusions&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre>
+
+<h3 id="classe-de-lancement-comexampledemodemoapplication">Classe de lancement: com.example.demo.DemoApplication</h3>
+<pre><code class="java">
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemoApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+
+    // Bean permettant de lister la liste des bens Spring instanciés
+    @Bean
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+        return args -&gt; {
+            System.out.println(&quot;Let's inspect the beans provided by Spring Boot:&quot;);
+
+            String[] beanNames = ctx.getBeanDefinitionNames();
+            Arrays.sort(beanNames);
+            for (String beanName : beanNames) {
+                System.out.println(beanName);
+            }
+
+        };
+    }
+
+}
+</code></pre>
+
+<p>La classe DemoApplication contient la méthode <code>void main(String[] args)</code> nécessaire dans une application Spring Boot, et permet l'exécution de celle-ci : c'est le point d'entrée de l'application.</p>
+<p>La classe de démarrage de l'application DemoApplication doit être à la racine du package principal si on veut permettre à Spring de scanner les sous-packages en utilisant l'annotation <strong>@SpringBootApplication</strong>.</p>
+<p>L'annotation @SpringBootApplication est centrale dans une application Spring Boot et permet de <strong>scanner le package courant et ses sous-packages</strong>.</p>
+<p>Elle est équivalente à l'ensemble des annotations</p>
+<pre><code>  @Configuration
+  @EnableAutoConfiguration
+  @ComponentScan
+</code></pre>
+
+<ul>
+<li>@Configuration permet de configurer une classe comme une source de définition des beans Spring.</li>
+<li>@EnableAutoConfiguration ajoute l'ensemble des beans du classpath.</li>
+<li>@ComponentScan autorise Spring à rechercher tous les composants, les configurations et autres services de l'application et à initialiser tous les contrôleurs.</li>
+</ul>
+<h3 id="le-controleur-comexamplespringboothellocontroller">Le contrôleur com.example.springboot.HelloController</h3>
+<p>```java
+package com.example.springboot;</p>
+<p>import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;</p>
+<p>@RestController
+public class HelloController {</p>
+<pre><code>@RequestMapping("/")
+public String index() {
+    return "Greetings from Spring Boot!";
+}
+</code></pre>
+<p>}
+  ```</p>
+<p>Cette classe est annotée @RestController, ce qui veut dire qu'elle est prête à être utilisée par Spring MVC pour gérer des requêtes web.</p>
+<p><strong>@RequestMapping</strong> associe / à la méthode index().Quand la méthode est invoquée depuis un navigateur web ou la commande curl elle retourne le texte du return.</p>
+<p>L'annotation @RestController, est une combinaison des annotations @Controller et @ResponseBody, créée une réponse web retournant de la <strong>data</strong> plutôt qu'une vue.</p>
+<h3 id="lancement">Lancement</h3>
+<p>Plusieurs possibilités:</p>
+<ul>
+<li>Avec Eclipse Run as Spring boot Application</li>
+<li>Avec maven <code>mvn spring-boot:run</code></li>
+<li>En lançant le main du jar généré</li>
+</ul>
+<h3 id="tests-manuels">Tests manuels</h3>
+<p>Il suffit de faire une requête http vers localhost:8080</p>
+<p><code>curl localhost:8080</code></p>
+<p>ou avec le navigateur:</p>
+<p><code>firefox http://localhost:8080</code></p>
+<p>8080 est le port par défaut du serveur web embarqué par spring boot.</p>
+<h3 id="tests-unitaires-junit">Tests unitaires Junit</h3>
+<pre><code class="java">package com.example.springboot;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.jupiter.api.Test;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+public class HelloControllerTest {
+
+    @Autowired
+    private MockMvc mvc;
+
+    @Test
+    public void getHello() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get(&quot;/&quot;).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo(&quot;Greetings from Spring Boot!&quot;)));
+    }
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="TP1/" class="btn btn-neutral float-right" title="TP1">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+        <span style="margin-left: 15px"><a href="TP1/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.1.2
+Build Date UTC : 2020-09-21 15:50:21.913267+00:00
+-->
