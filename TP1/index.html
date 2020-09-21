@@ -54,6 +54,18 @@
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">TP1</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#partie-1-bdd">Partie 1 BDD</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#partie-2-mvc">Partie 2 MVC</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#crud">CRUD</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#creation-mise-a-jour-dun-product">Création / mise à jour d'un product</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#partie-3-securite-roles-et-permissions">Partie 3 Sécurité / Rôles et permissions</a>
+    </li>
     </ul>
                     </li>
                 </ul>
@@ -93,63 +105,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="exo-thymeleaf">Exo thymeleaf</h1>
-<p>Thymeleaf est un  Java HTML5 Template Engine qui peut travailler à la fois dans des environnements Web (Servlet) et celui de non Web. Il est mieux adapté pour diffuser XHTML/HTML5 sur View (View Layer) des applications Web basées sur MVC. Mais il peut traiter n'importe quel fichier XML même dans des environnements hors ligne (offline). Il fournit une intégration complète de Spring Framework​​​​​​​.</p>
-<p><img alt="springThymeleaf" src="../exoimg/springThymeleaf.png" /></p>
-<p>Le fichier modèle (Template file) de Thymeleaf est en substance un fichier de document ordinaire au format HTML5. Thymeleaf Engine (le moteur Thymeleaf) va lire un fichier modèle et le combiner avec des objets Java pour générer (generate) un autre document.
-<img alt="thymeleafTemplate" src="../exoimg/thymeleafTemplate.png" /></p>
-<p>Voici ce que nous allons réaliser:</p>
-<p><img alt="exoThymeleaf" src="../exoimg/exoThymeleaf.gif" /></p>
-<h1 id="exo-thymeleaf-security">Exo thymeleaf Security</h1>
-<p><a href="https://www.thymeleaf.org/doc/articles/springsecurity.html">Tuto</a></p>
-<p>Dépendances start.spring.io
-    devtools
-    web
-    thymeleaf
-    Security</p>
-<p>Ajouter dans le pom généré:</p>
-<pre><code class="xml">dependency&gt;
-           &lt;groupId&gt;org.thymeleaf.extras&lt;/groupId&gt;
-           &lt;artifactId&gt;thymeleaf-extras-springsecurity5&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-</code></pre>
-
-<p>Un petit conseil: il vaut mieux supprimer tous les <code>.html</code> non nécessaire.</p>
-<p>Classe de configuration de la sécurité:</p>
-<pre><code class="java">@Configuration
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    protected void configure(final HttpSecurity http) throws Exception {
-        http
-            .formLogin()
-            .loginPage(&quot;/login&quot;)
-            .failureUrl(&quot;/login-error&quot;)
-          .and()
-            .logout()
-            .logoutSuccessUrl(&quot;/index&quot;);
-    }
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-             User.withDefaultPasswordEncoder()
-                .username(&quot;user&quot;)
-                .password(&quot;user&quot;)
-                .roles(&quot;USER&quot;)
-                .build();
-        UserDetails admin =
-                User.withDefaultPasswordEncoder()
-                .username(&quot;admin&quot;)
-                .password(&quot;admin&quot;)
-                .roles(&quot;ADMIN&quot;)
-                .build();
-
-        return new InMemoryUserDetailsManager(user,admin);
-    }
-}
-</code></pre>
-
-<h1 id="tp1">TP1</h1>
+                <h1 id="tp1">TP1</h1>
 <p>url:</p>
 <p><code>https://start.spring.io/starter.zip?name=webapp&amp;groupId=com.boot&amp;artifactId=webapp&amp;version=0.0.1-SNAPSHOT&amp;description=Demo+project+for+Spring+Boot&amp;packageName=com.example.demo&amp;type=maven-project&amp;packaging=jar&amp;javaVersion=1.8&amp;language=java&amp;bootVersion=2.3.3.RELEASE&amp;dependencies=devtools&amp;dependencies=h2&amp;dependencies=data-jpa&amp;dependencies=security&amp;dependencies=thymeleaf&amp;dependencies=web</code></p>
 <h2 id="partie-1-bdd">Partie 1 BDD</h2>

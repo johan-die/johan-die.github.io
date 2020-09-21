@@ -84,6 +84,10 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exo-thymeleaf">Exo thymeleaf</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exo-thymeleaf-security">Exo thymeleaf Security</a>
+    </li>
     </ul>
                     </li>
                 </ul>
@@ -357,6 +361,62 @@ public class HelloControllerTest {
     }
 }
 </code></pre>
+
+<h2 id="exo-thymeleaf">Exo thymeleaf</h2>
+<p>Thymeleaf est un  Java HTML5 Template Engine qui peut travailler à la fois dans des environnements Web (Servlet) et celui de non Web. Il est mieux adapté pour diffuser XHTML/HTML5 sur View (View Layer) des applications Web basées sur MVC. Mais il peut traiter n'importe quel fichier XML même dans des environnements hors ligne (offline). Il fournit une intégration complète de Spring Framework​​​​​​​.</p>
+<p><img alt="springThymeleaf" src="exoimg/springThymeleaf.png" /></p>
+<p>Le fichier modèle (Template file) de Thymeleaf est en substance un fichier de document ordinaire au format HTML5. Thymeleaf Engine (le moteur Thymeleaf) va lire un fichier modèle et le combiner avec des objets Java pour générer (generate) un autre document.
+<img alt="thymeleafTemplate" src="exoimg/thymeleafTemplate.png" /></p>
+<p>Voici ce que nous allons réaliser:</p>
+<p><img alt="exoThymeleaf" src="exoimg/exoThymeleaf.gif" /></p>
+<h2 id="exo-thymeleaf-security">Exo thymeleaf Security</h2>
+<p><a href="https://www.thymeleaf.org/doc/articles/springsecurity.html">Tuto</a></p>
+<p>Dépendances start.spring.io
+    devtools
+    web
+    thymeleaf
+    Security</p>
+<p>Ajouter dans le pom généré:</p>
+<pre><code class="xml">dependency&gt;
+           &lt;groupId&gt;org.thymeleaf.extras&lt;/groupId&gt;
+           &lt;artifactId&gt;thymeleaf-extras-springsecurity5&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+</code></pre>
+
+<p>Un petit conseil: il vaut mieux supprimer tous les <code>.html</code> non nécessaire.</p>
+<p>Classe de configuration de la sécurité:</p>
+<pre><code class="java">@Configuration
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    protected void configure(final HttpSecurity http) throws Exception {
+        http
+            .formLogin()
+            .loginPage(&quot;/login&quot;)
+            .failureUrl(&quot;/login-error&quot;)
+          .and()
+            .logout()
+            .logoutSuccessUrl(&quot;/index&quot;);
+    }
+    @Bean
+    @Override
+    public UserDetailsService userDetailsService() {
+        UserDetails user =
+             User.withDefaultPasswordEncoder()
+                .username(&quot;user&quot;)
+                .password(&quot;user&quot;)
+                .roles(&quot;USER&quot;)
+                .build();
+        UserDetails admin =
+                User.withDefaultPasswordEncoder()
+                .username(&quot;admin&quot;)
+                .password(&quot;admin&quot;)
+                .roles(&quot;ADMIN&quot;)
+                .build();
+
+        return new InMemoryUserDetailsManager(user,admin);
+    }
+}
+</code></pre>
               
             </div>
           </div>
@@ -410,5 +470,5 @@ public class HelloControllerTest {
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-09-21 16:21:43.383402+00:00
+Build Date UTC : 2020-09-21 16:32:00.110885+00:00
 -->
