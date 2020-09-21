@@ -294,19 +294,22 @@ public class DemoApplication {
 <li>@ComponentScan autorise Spring à rechercher tous les composants, les configurations et autres services de l'application et à initialiser tous les contrôleurs.</li>
 </ul>
 <h3 id="le-controleur-comexamplespringboothellocontroller">Le contrôleur com.example.springboot.HelloController</h3>
-<p>```java
-package com.example.springboot;</p>
-<p>import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;</p>
-<p>@RestController
-public class HelloController {</p>
-<pre><code>@RequestMapping("/")
-public String index() {
-    return "Greetings from Spring Boot!";
+<pre><code class="java">package com.example.springboot;
+
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RestController
+public class HelloController {
+
+    @RequestMapping(&quot;/&quot;)
+    public String index() {
+        return &quot;Greetings from Spring Boot!&quot;;
+    }
+
 }
 </code></pre>
-<p>}
-  ```</p>
+
 <p>Cette classe est annotée @RestController, ce qui veut dire qu'elle est prête à être utilisée par Spring MVC pour gérer des requêtes web.</p>
 <p><strong>@RequestMapping</strong> associe / à la méthode index().Quand la méthode est invoquée depuis un navigateur web ou la commande curl elle retourne le texte du return.</p>
 <p>L'annotation @RestController, est une combinaison des annotations @Controller et @ResponseBody, créée une réponse web retournant de la <strong>data</strong> plutôt qu'une vue.</p>
@@ -407,5 +410,5 @@ public class HelloControllerTest {
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-09-21 16:12:02.671541+00:00
+Build Date UTC : 2020-09-21 16:19:52.792621+00:00
 -->
