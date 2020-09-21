@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>TP1 - Spring Boot</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "TP1";
+    var mkdocs_page_input_path = "TP1.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Spring Boot</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">TP1</a>
+    <ul class="current">
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../about/">About</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Spring Boot</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>TP1</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="exo-thymeleaf">Exo thymeleaf</h1>
+<p>Thymeleaf est un  Java HTML5 Template Engine qui peut travailler à la fois dans des environnements Web (Servlet) et celui de non Web. Il est mieux adapté pour diffuser XHTML/HTML5 sur View (View Layer) des applications Web basées sur MVC. Mais il peut traiter n'importe quel fichier XML même dans des environnements hors ligne (offline). Il fournit une intégration complète de Spring Framework​​​​​​​.</p>
+<p><img alt="springThymeleaf" src="../exoimg/springThymeleaf.png" /></p>
+<p>Le fichier modèle (Template file) de Thymeleaf est en substance un fichier de document ordinaire au format HTML5. Thymeleaf Engine (le moteur Thymeleaf) va lire un fichier modèle et le combiner avec des objets Java pour générer (generate) un autre document.
+<img alt="thymeleafTemplate" src="../exoimg/thymeleafTemplate.png" /></p>
+<p>Voici ce que nous allons réaliser:</p>
+<p><img alt="exoThymeleaf" src="../exoimg/exoThymeleaf.gif" /></p>
+<h1 id="exo-thymeleaf-security">Exo thymeleaf Security</h1>
+<p><a href="https://www.thymeleaf.org/doc/articles/springsecurity.html">Tuto</a></p>
+<p>Dépendances start.spring.io
+    devtools
+    web
+    thymeleaf
+    Security</p>
+<p>Ajouter dans le pom généré:</p>
+<pre><code class="xml">dependency&gt;
+           &lt;groupId&gt;org.thymeleaf.extras&lt;/groupId&gt;
+           &lt;artifactId&gt;thymeleaf-extras-springsecurity5&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+</code></pre>
+
+<p>Un petit conseil: il vaut mieux supprimer tous les <code>.html</code> non nécessaire.</p>
+<p>Classe de configuration de la sécurité:</p>
+<pre><code class="java">@Configuration
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    protected void configure(final HttpSecurity http) throws Exception {
+        http
+            .formLogin()
+            .loginPage(&quot;/login&quot;)
+            .failureUrl(&quot;/login-error&quot;)
+          .and()
+            .logout()
+            .logoutSuccessUrl(&quot;/index&quot;);
+    }
+    @Bean
+    @Override
+    public UserDetailsService userDetailsService() {
+        UserDetails user =
+             User.withDefaultPasswordEncoder()
+                .username(&quot;user&quot;)
+                .password(&quot;user&quot;)
+                .roles(&quot;USER&quot;)
+                .build();
+        UserDetails admin =
+                User.withDefaultPasswordEncoder()
+                .username(&quot;admin&quot;)
+                .password(&quot;admin&quot;)
+                .roles(&quot;ADMIN&quot;)
+                .build();
+
+        return new InMemoryUserDetailsManager(user,admin);
+    }
+}
+</code></pre>
+
+<h1 id="tp1">TP1</h1>
+<p>url:</p>
+<p><code>https://start.spring.io/starter.zip?name=webapp&amp;groupId=com.boot&amp;artifactId=webapp&amp;version=0.0.1-SNAPSHOT&amp;description=Demo+project+for+Spring+Boot&amp;packageName=com.example.demo&amp;type=maven-project&amp;packaging=jar&amp;javaVersion=1.8&amp;language=java&amp;bootVersion=2.3.3.RELEASE&amp;dependencies=devtools&amp;dependencies=h2&amp;dependencies=data-jpa&amp;dependencies=security&amp;dependencies=thymeleaf&amp;dependencies=web</code></p>
+<h2 id="partie-1-bdd">Partie 1 BDD</h2>
+<p>L'utilisation de JPA (Java Persistence API) permet de s'abstraire du langage de requête de la base de données.</p>
+<p>H2 est une base de données embarquée, en mémoire, écrite en Java qui permet de garder le build portable.</p>
+<p>La configuration de H2 est très simple. Il suffit de l'ajouter dans le POM pour que Spring Boot créer automatiquement la database, créer les objets JDBC et configure Hibernate. Hibernate va à son tour scanner toutes les annotations JPA et va créer automatiquement les tables dans la BDD.</p>
+<p>Connexion console :
+    JDBC URL=url=jdbc:h2:mem:testdb</p>
+<h2 id="partie-2-mvc">Partie 2 MVC</h2>
+<h3 id="crud">CRUD</h3>
+<p>L'acronyme CRUD (pour create, read, update, delete) désigne les quatre opérations de base pour la persistance des données, en particulier le stockage d'informations en base de données.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>SQL</th>
+<th>HTTP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create</td>
+<td>INSERT</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>Read</td>
+<td>SELECT</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>Update</td>
+<td>UPDATE</td>
+<td>PUT</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>DELETE</td>
+<td>DELETE</td>
+</tr>
+</tbody>
+</table>
+<h3 id="creation-mise-a-jour-dun-product">Création / mise à jour d'un product</h3>
+<p>La même page HTML peut être utilisée pour créer et mettre à jour les produits.</p>
+<p>L'astuce consiste à faire en sorte que le controller retourne un objet vide pour une création et l'objet existant pour une mise à jour.
+De cette façon il n'y aura pas de problèmes d'objets null. Et toutes les propriétés non nulle peuvent se transformer en formulaire.</p>
+<p>La ligne suivante crée le formulaire dans Thymeleaf.</p>
+<pre><code class="xml">&lt;form class=&quot;form-horizontal&quot; th:object=&quot;${product}&quot; th:action=&quot;@{/product}&quot; method=&quot;post&quot;&gt;
+</code></pre>
+
+<p>Le tag <code>th:object</code> relie l'objet product au formulaire.</p>
+<p>Le tag <code>th:action</code> définit quelle url doit être appelée lors de la soumission du formulaire (/product) url. La méthode <code>post</code> est aussi renseignée.</p>
+<p>C'est donc le controller suivant qui va être appelé:</p>
+<pre><code class="java">@RequestMapping(value = &quot;product&quot;, method = RequestMethod.POST)
+public String saveProduct(Product product){
+    productService.saveProduct(product);
+    return &quot;redirect:/product/&quot; + product.getId();
+}
+</code></pre>
+
+<p>Il retourne vers l'objet modifié.</p>
+<p>L'étape suivante est cruciale pour que les mise à jour fonctionnent.</p>
+<p>Toutes les entités présentes en BDD ont un ID. L'utilisateur ne peut pas l'éditer mais il doit être présent dans la requête de retour vers le serveur.
+Si l'ID est manquant, le système ne peut pas savoir si c'est une MàJ ou une création. En cas d'oubli de l'ID une nouvelle entité sera crée en BDD.</p>
+<p>La manière de gérer ce problème est d'inclure des champs cachés. (Pour hibernate le champ version permet d'éviter les conflits de mise à jour)</p>
+<pre><code class="xml">&lt;input type=&quot;hidden&quot; th:field=&quot;*{id}&quot;/&gt;
+&lt;input type=&quot;hidden&quot; th:field=&quot;*{version}&quot;/&gt;
+</code></pre>
+
+<h2 id="partie-3-securite-roles-et-permissions">Partie 3 Sécurité / Rôles et permissions</h2>
+<p>Ce que nous voulons réaliser:</p>
+<ul>
+<li>Pour un utilisateur pas authentifié: Vue page d'accueil et liste de produits.</li>
+<li>Pour un utilisateur authentifié (Rôle USER) vue en plus des détails du produit.</li>
+<li>Pour un  utilisateur authentifié (Rôle ADMIN) CRUD sur les produits.</li>
+</ul>
+<p>A faire:</p>
+<ul>
+<li>Modification du controller de sécurité:</li>
+<li>Spécifier les url nécessitant de sécurité.</li>
+<li>
+<p>Pour toutes les autres rajouter le code suivant:
+  <code>java
+    .anyRequest().permitAll()
+            .and().formLogin().loginPage("/login").permitAll()
+            .and().logout().permitAll();</code></p>
+</li>
+<li>
+<p>Ajout dans le menu d'une condition de création de product: <code>sec:authorize="hasRole('ROLE_ADMIN')"</code></p>
+</li>
+<li>Ajout de la page login.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../about/" class="btn btn-neutral float-right" title="About">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../about/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
