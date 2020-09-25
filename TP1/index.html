@@ -182,16 +182,15 @@ Si l'ID est manquant, le système ne peut pas savoir si c'est une MàJ ou une cr
 <ul>
 <li>Modification du controller de sécurité:</li>
 <li>Spécifier les url nécessitant de sécurité.</li>
-<li>
-<p>Pour toutes les autres rajouter le code suivant:
-  <code>java
-    .anyRequest().permitAll()
-            .and().formLogin().loginPage("/login").permitAll()
-            .and().logout().permitAll();</code></p>
-</li>
-<li>
-<p>Ajout dans le menu d'une condition de création de product: <code>sec:authorize="hasRole('ROLE_ADMIN')"</code></p>
-</li>
+<li>Pour toutes les autres rajouter le code suivant:</li>
+</ul>
+<pre><code class="java">    .anyRequest().permitAll()
+            .and().formLogin().loginPage(&quot;/login&quot;).permitAll()
+            .and().logout().permitAll();
+</code></pre>
+
+<ul>
+<li>Ajout dans le menu d'une condition de création de product: <code>sec:authorize="hasRole('ROLE_ADMIN')"</code></li>
 <li>Ajout de la page login.</li>
 </ul>
               

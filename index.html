@@ -88,6 +88,16 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#exo-thymeleaf-security">Exo thymeleaf Security</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#spring-controller">Spring Controller</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#controller">Controller</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#restcontroller">RestController</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#retourner-une-vue">Retourner une vue</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                     </li>
                 </ul>
@@ -413,6 +423,63 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 }
 </code></pre>
+
+<h2 id="spring-controller">Spring Controller</h2>
+<p>Quelle est la différence entre les annotations <code>@Controller</code> et <code>@RestController</code> dans Spring MVC?</p>
+<h3 id="controller">Controller</h3>
+<p>Les contrôleurs classiques peuvent être annotés avec l’annotation <code>@Controller</code> .</p>
+<p>Il s’agit simplement d’une spécialisation de la classe <code>@Component</code> qui permet de détecter automatiquement les classes d’implémentation via le balayage du classpath.</p>
+<p><code>@Controller</code> est généralement utilisé en combinaison avec une annotation <code>@RequestMapping</code> utilisée dans les méthodes de traitement des demandes.</p>
+<p>Voyons un exemple rapide du contrôleur Spring MVC:</p>
+<pre><code class="java">@Controller
+@RequestMapping(&quot;books&quot;)
+public class SimpleBookController {
+
+    @GetMapping(&quot;/{id}&quot;, produces = &quot;application/json&quot;)
+    public @ResponseBody Book getBook(@PathVariable int id) {
+        return findBookById(id);
+    }
+
+    private Book findBookById(int id) {
+       //...
+    }
+}
+
+</code></pre>
+
+<p>La méthode de traitement de la demande est annotée avec <code>@ResponseBody</code> . Cette annotation active la sérialisation automatique de l’objet de retour dans HttpResponse .</p>
+<h3 id="restcontroller">RestController</h3>
+<p><code>@RestController</code> est une version spécialisée du contrôleur. Il inclut les annotations <code>@Controller</code> et <code>@ResponseBody</code> et simplifie donc la mise en œuvre du contrôleur:</p>
+<pre><code class="java">@RestController
+@RequestMapping(&quot;books-rest&quot;)
+public class SimpleBookRestController {
+
+    @GetMapping(&quot;/{id}&quot;, produces = &quot;application/json&quot;)
+    public Book getBook(@PathVariable int id) {
+        return findBookById(id);
+    }
+
+    private Book findBookById(int id) {
+       //...
+    }
+}
+</code></pre>
+
+<p>Le contrôleur est annoté avec l’annotation <code>@RestController</code> ; par conséquent, le <code>@ResponseBody</code> n’est pas requis.</p>
+<p>Chaque méthode de traitement des demandes de la classe de contrôleur sérialise automatiquement les objets renvoyés dans HttpResponse .</p>
+<h3 id="retourner-une-vue">Retourner une vue</h3>
+<p>Pour retourner une vue (Thymleaf par exemple), il suffit d'avoir un controller et de retourner la string correspondant au fichier de la vue.</p>
+<pre><code class="java">@Controller
+public class MainController {
+
+    // Login form
+    @RequestMapping(value = { &quot;/log-in&quot;, &quot;/login&quot; }, method = RequestMethod.GET)
+    public String login() {
+        return &quot;login&quot;; //retourne la page login.html
+    }
+}
+
+</code></pre>
               
             </div>
           </div>
@@ -466,5 +533,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-09-24 16:21:04.436583+00:00
+Build Date UTC : 2020-09-25 16:59:18.151475+00:00
 -->
