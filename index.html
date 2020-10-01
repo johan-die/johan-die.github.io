@@ -96,6 +96,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#retourner-une-vue">Retourner une vue</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#autres-annotations">Autres annotations</a>
+    </li>
         </ul>
     </li>
     </ul>
@@ -480,6 +482,27 @@ public class MainController {
 }
 
 </code></pre>
+
+<h3 id="autres-annotations">Autres annotations</h3>
+<ul>
+<li>
+<p><code>@Component</code>
+Cette annotation est utilisée sur les classes pour indiquer un composant Spring. L'annotation <code>@Component</code> marque la classe Java en tant que bean ou composant afin que le mécanisme d'analyse des composants de Spring puisse l'ajouter au contexte de l'application.</p>
+</li>
+<li>
+<p><code>@Controller</code>
+L'annotation @Controller est utilisée pour indiquer que la classe est un contrôleur Spring. Cette annotation peut être utilisée pour identifier les contrôleurs pour Spring MVC ou Spring WebFlux.</p>
+</li>
+<li>
+<p><code>@Service</code>
+Cette annotation est utilisée sur une classe. @Service marque une classe Java qui effectue certains traitements service, tels que l'exécution de la logique métier, l'exécution de calculs et l'appel d'API externes. Cette annotation est une forme spécialisée de l'annotation @Component destinée à être utilisée dans la couche de service.</p>
+</li>
+<li>
+<p><code>@Repository</code>
+Cette annotation est utilisée sur les classes Java qui accèdent directement à la base de données. L'annotation <code>@Repository</code> fonctionne comme un marqueur pour toute classe remplissant le rôle de référentiel ou d'objet d'accès aux données.</p>
+</li>
+</ul>
+<p>Cette annotation a une fonction de traduction automatique. Par exemple, lorsqu'une exception se produit dans @Repository, il existe un gestionnaire pour cette exception et il n'est pas nécessaire d'ajouter un bloc try-catch.</p>
               
             </div>
           </div>
@@ -533,5 +556,5 @@ public class MainController {
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-09-25 16:59:18.151475+00:00
+Build Date UTC : 2020-10-01 17:24:26.168426+00:00
 -->

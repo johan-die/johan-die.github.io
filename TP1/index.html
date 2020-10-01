@@ -66,6 +66,24 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#partie-3-securite-roles-et-permissions">Partie 3 Sécurité / Rôles et permissions</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#partie-4-securisation-de-lapplication-avec-la-bdd">Partie 4 Sécurisation de l'application avec la BDD</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#creation-des-entitees-jpa">Création des entitées JPA.</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#repositories-jpa">Repositories JPA</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#services-jpa">Services JPA</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cryptage-du-mot-de-passe">Cryptage du mot de passe</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#configuration-de-la-securite">Configuration de la Sécurité</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#initialisation-de-lapplication">Initialisation de l'Application</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#thymleaf-security">Thymleaf Security</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                     </li>
                 </ul>
@@ -144,6 +162,80 @@
 </tr>
 </tbody>
 </table>
+<p>L'annotation <code>@Autowired</code> placée sur un setter permet de demander à Spring de d'injecter une dépendance.</p>
+<p>L'annotation <code>@Service</code> placée sur une classe permet de demander à Spring de d'injecter une dépendance.</p>
+<ul>
+<li>Créer une classe annotée composant</li>
+</ul>
+<pre><code class="java">public class ProductLoader implements ApplicationListener&lt;ContextRefreshedEvent&gt;{}
+</code></pre>
+
+<p>Y injecter le ProductRepository.
+Dans le onApplication event injecter plusieurs instances de produit dans le productRepository.</p>
+<ul>
+<li>Créer l'interface ProductService permettant au controller d'interragir avec le modèle:</li>
+</ul>
+<pre><code class="java">public interface ProductService {
+    Iterable&lt;Product&gt; listAllProducts();
+
+    Product getProductById(Integer id);
+
+    Product saveProduct(Product product);
+
+    void deleteProduct(Integer id);
+}
+</code></pre>
+
+<ul>
+<li>
+<p>Implementer le @Service ProductServiceImpl en mappant toutes les méthodes sur le ProductRepository (à injecter)</p>
+</li>
+<li>
+<p>Completer le controller suivant. Il doit utiliser le ProductService.</p>
+</li>
+</ul>
+<pre><code class="java">@Controller
+public class ProductController {
+     private ProductService productService;
+     //GET sur /products
+
+        public String list(Model model){
+            model.addAttribute(&quot;products&quot;, ....
+            return &quot;products&quot;;
+        }
+
+        //GET sur &quot;product/show/{id}&quot;
+        public String showProduct(@PathVariable Integer id, Model model){
+            model.addAttribute(&quot;product&quot;, ...
+            return &quot;productshow&quot;;
+        }
+
+        //GET sur &quot;product/edit/{id}&quot;
+        public String edit(@PathVariable Integer id, Model model){
+            model.addAttribute(&quot;product&quot;,...
+            return &quot;productform&quot;;
+        }
+
+        //GET sur&quot;product/new&quot;
+        public String newProduct(Model model){
+            model.addAttribute(&quot;product&quot;, new Product());
+            return &quot;productform&quot;;
+        }
+
+        //POST sur &quot;product&quot;
+        public String saveProduct(Product product){
+            ...
+            return &quot;redirect:/product/show/&quot; + product.getId();
+        }
+
+        //GET sur &quot;product/delete/{id}&quot;
+        public String delete(@PathVariable Integer id){
+            ...
+            return &quot;redirect:/products&quot;;
+        }
+}
+</code></pre>
+
 <h3 id="creation-mise-a-jour-dun-product">Création / mise à jour d'un product</h3>
 <p>La même page HTML peut être utilisée pour créer et mettre à jour les produits.</p>
 <p>L'astuce consiste à faire en sorte que le controller retourne un objet vide pour une création et l'objet existant pour une mise à jour.
@@ -171,6 +263,269 @@ Si l'ID est manquant, le système ne peut pas savoir si c'est une MàJ ou une cr
 &lt;input type=&quot;hidden&quot; th:field=&quot;*{version}&quot;/&gt;
 </code></pre>
 
+<ul>
+<li>Dans la prochaine étape nous allons utiliser dans fragments dans nos pages HTML pour éviter de répéter du code.</li>
+</ul>
+<p>index.html</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head lang=&quot;en&quot;&gt;
+    &lt;title&gt;Spring boot Web app&lt;/title&gt;
+&lt;!--     Inclusion d'un fragment, uniquement visible quand executé par spring --&gt;
+&lt;!--     La mise en commentaire permet de faire afficher la page dans le browser sans erreur --&gt;
+
+    &lt;!--/*/ &lt;th:block th:include=&quot;fragments/headerinc :: head&quot;&gt;&lt;/th:block&gt; /*/--&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;container&quot;&gt;
+    &lt;!--/*/ &lt;th:block th:include=&quot;fragments/menu :: header&quot;&gt;&lt;/th:block&gt; /*/--&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>fragments/headerinc.html</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head lang=&quot;en&quot; th:fragment=&quot;head&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+&lt;link
+    href=&quot;http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css&quot;
+    th:href=&quot;@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}&quot;
+    rel=&quot;stylesheet&quot; media=&quot;screen&quot; /&gt;
+&lt;script src=&quot;http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js&quot;
+    th:src=&quot;@{/webjars/jquery/2.1.4/jquery.min.js}&quot;&gt;&lt;/script&gt;
+&lt;link href=&quot;../../static/css/boot.css&quot; th:href=&quot;@{../css/boot.css}&quot;
+    rel=&quot;stylesheet&quot; media=&quot;screen&quot; /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>fragments/menu.html</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head lang=&quot;en&quot;&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;/&gt;
+    &lt;link href=&quot;http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css&quot;
+          th:href=&quot;@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}&quot;
+          rel=&quot;stylesheet&quot; media=&quot;screen&quot;/&gt;
+
+    &lt;script src=&quot;http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js&quot;
+            th:src=&quot;@{/webjars/jquery/2.1.4/jquery.min.js}&quot;&gt;&lt;/script&gt;
+
+   &lt;link href=&quot;../../static/css/boot.css&quot; th:href=&quot;@{../css/boot.css}&quot;
+    rel=&quot;stylesheet&quot; media=&quot;screen&quot; /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class=&quot;container&quot;&gt;
+    &lt;div th:fragment=&quot;header&quot;&gt;
+        &lt;nav class=&quot;navbar navbar-default&quot;&gt;
+            &lt;div class=&quot;container-fluid&quot;&gt;
+                &lt;div class=&quot;navbar-header&quot;&gt;
+                    &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot; th:href=&quot;@{/}&quot;&gt;Home&lt;/a&gt;
+                    &lt;ul class=&quot;nav navbar-nav&quot;&gt;
+                        &lt;li&gt;&lt;a href=&quot;#&quot; th:href=&quot;@{/products}&quot;&gt;Products&lt;/a&gt;&lt;/li&gt;
+                        &lt;li&gt;&lt;a href=&quot;#&quot; th:href=&quot;@{/product/new}&quot;&gt;Create Product&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/nav&gt;
+
+        &lt;div class=&quot;jumbotron&quot;&gt;
+            &lt;div class=&quot;row text-center&quot;&gt;
+                &lt;div class=&quot;&quot;&gt;
+                    &lt;h2&gt;Spring Framework&lt;/h2&gt;
+
+                    &lt;h3&gt;Spring Boot Web App&lt;/h3&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;row text-center&quot;&gt;
+                &lt;img alt=&quot;boots&quot; src=&quot;images/boots.jpg&quot; width=&quot;300&quot;
+        th:src=&quot;@{../../images/boots.jpg}&quot;/&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<ul>
+<li>Puis nous allons ajouter les vues produit</li>
+</ul>
+<p>products.html</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;
+    xmlns:sec=&quot;http://www.thymeleaf.org/extras/spring-security&quot;&gt;
+&lt;head lang=&quot;en&quot;&gt;
+
+&lt;title&gt;Spring Framework&lt;/title&gt;
+
+&lt;!--/*/ &lt;th:block th:include=&quot;fragments/headerinc :: head&quot;&gt;&lt;/th:block&gt; /*/--&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+        &lt;!--/*/ &lt;th:block th:include=&quot;fragments/menu :: header&quot;&gt;&lt;/th:block&gt; /*/--&gt;
+
+        &lt;div th:if=&quot;${not #lists.isEmpty(products)}&quot;&gt;
+            &lt;form th:action=&quot;@{/logout}&quot; method=&quot;post&quot;&gt;
+                &lt;div class=&quot;col-sm-10&quot;&gt;
+                    &lt;h2&gt;Product Listing&lt;/h2&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;col-sm-2&quot; style=&quot;padding-top: 30px;&quot;&gt;
+                    &lt;span sec:authorize=&quot;isAuthenticated()&quot;&gt; &lt;input
+                        type=&quot;submit&quot; value=&quot;Sign Out&quot; /&gt;
+                    &lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/form&gt;
+            &lt;table class=&quot;table table-striped&quot;&gt;
+                &lt;tr&gt;
+                    &lt;th&gt;Id&lt;/th&gt;
+                    &lt;th&gt;Product Id&lt;/th&gt;
+                    &lt;th&gt;Description&lt;/th&gt;
+                    &lt;th&gt;Price&lt;/th&gt;
+                &lt;th sec:authorize=&quot;hasAnyRole('ROLE_USER','ROLE_ADMIN')&quot;&gt;View&lt;/th&gt;
+                &lt;th sec:authorize=&quot;hasRole('ROLE_ADMIN')&quot;&gt;Edit&lt;/th&gt;
+                &lt;th sec:authorize=&quot;hasRole('ROLE_ADMIN')&quot;&gt;Delete&lt;/th&gt;
+                &lt;/tr&gt;
+                &lt;tr th:each=&quot;product : ${products}&quot;&gt;
+                    &lt;td th:text=&quot;${product.id}&quot;&gt;&lt;a href=&quot;/product/${product.id}&quot;&gt;Id&lt;/a&gt;&lt;/td&gt;
+&lt;!--    la notation th est equivalente au java     Product Id permet d'avoir un affichage avec un browser seul--&gt;
+                    &lt;td th:text=&quot;${product.productId}&quot;&gt;Product Id&lt;/td&gt;
+                    &lt;td th:text=&quot;${product.description}&quot;&gt;descirption&lt;/td&gt;
+                    &lt;td th:text=&quot;${product.price}&quot;&gt;price&lt;/td&gt;
+                &lt;td sec:authorize=&quot;hasAnyRole('ROLE_USER','ROLE_ADMIN')&quot;&gt;&lt;a th:href=&quot;${'/product/show/' + product.id}&quot;&gt;View&lt;/a&gt;&lt;/td&gt;
+                &lt;td sec:authorize=&quot;hasRole('ROLE_ADMIN')&quot;&gt;&lt;a th:href=&quot;${'/product/edit/' + product.id}&quot;&gt;Edit&lt;/a&gt;&lt;/td&gt;
+                &lt;td sec:authorize=&quot;hasRole('ROLE_ADMIN')&quot;&gt;&lt;a th:href=&quot;${'/product/delete/' + product.id}&quot;&gt;Delete&lt;/a&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>productshow.html</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot; xmlns:sec=&quot;http://www.thymeleaf.org/extras/spring-security&quot;&gt;
+&lt;head lang=&quot;en&quot;&gt;
+&lt;title&gt;Spring Framework&lt;/title&gt;
+&lt;!--/*/ &lt;th:block th:include=&quot;fragments/headerinc :: head&quot;&gt;&lt;/th:block&gt; /*/--&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+    &lt;!--/*/ &lt;th:block th:include=&quot;fragments/menu :: header&quot;&gt;&lt;/th:block&gt; /*/--&gt;
+
+     &lt;form class=&quot;form-horizontal&quot; th:action=&quot;@{/logout}&quot; method=&quot;post&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt;&lt;h2&gt;Product Details&lt;/h2&gt;&lt;/div&gt;
+            &lt;div class=&quot;col-sm-2&quot; style=&quot;padding-top: 25px;&quot;&gt;
+         &lt;span sec:authorize=&quot;isAuthenticated()&quot;&gt;
+              &lt;input type=&quot;submit&quot; value=&quot;Sign Out&quot;/&gt;
+           &lt;/span&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label class=&quot;col-sm-2 control-label&quot;&gt;Product Id:&lt;/label&gt;
+                    &lt;div class=&quot;col-sm-10&quot;&gt;
+                        &lt;p class=&quot;form-control-static&quot; th:text=&quot;${product.id}&quot;&gt;Product Id&lt;/p&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label class=&quot;col-sm-2 control-label&quot;&gt;Product Bar Code:&lt;/label&gt;
+                    &lt;div class=&quot;col-sm-10&quot;&gt;
+                        &lt;p class=&quot;form-control-static&quot; th:text=&quot;${product.productId}&quot;&gt;Product Bar code&lt;/p&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label class=&quot;col-sm-2 control-label&quot;&gt;Description:&lt;/label&gt;
+                    &lt;div class=&quot;col-sm-10&quot;&gt;
+                        &lt;p class=&quot;form-control-static&quot; th:text=&quot;${product.description}&quot;&gt;description&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label class=&quot;col-sm-2 control-label&quot;&gt;Price:&lt;/label&gt;
+                    &lt;div class=&quot;col-sm-10&quot;&gt;
+                        &lt;p class=&quot;form-control-static&quot; th:text=&quot;${product.price}&quot;&gt;Priceaddd&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;form-group&quot;&gt;
+                    &lt;label class=&quot;col-sm-2 control-label&quot;&gt;Image Url:&lt;/label&gt;
+                    &lt;div class=&quot;col-sm-10&quot;&gt;
+                        &lt;p class=&quot;form-control-static&quot; th:text=&quot;${product.imageUrl}&quot;&gt;url....&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>productform.html</p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head lang=&quot;en&quot;&gt;
+
+    &lt;title&gt;Spring Framework&lt;/title&gt;
+
+    &lt;!--/*/ &lt;th:block th:include=&quot;fragments/headerinc :: head&quot;&gt;&lt;/th:block&gt; /*/--&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;container&quot;&gt;
+    &lt;!--/*/ &lt;th:block th:include=&quot;fragments/menu :: header&quot;&gt;&lt;/th:block&gt; /*/--&gt;
+
+    &lt;form class=&quot;form-horizontal&quot; th:action=&quot;@{/logout}&quot; method=&quot;post&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+            &lt;div class=&quot;col-sm-10&quot;&gt; &lt;h2&gt;Product Create/Update&lt;/h2&gt;&lt;/div&gt;
+            &lt;div class=&quot;col-sm-2&quot; style=&quot;padding-top: 30px;&quot;&gt;
+                &lt;input  type=&quot;submit&quot; value=&quot;Sign Out&quot;/&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+
+    &lt;div&gt;
+        &lt;form class=&quot;form-horizontal&quot; th:object=&quot;${product}&quot; th:action=&quot;@{/product}&quot; method=&quot;post&quot;&gt;
+            &lt;input type=&quot;hidden&quot; th:field=&quot;*{id}&quot;/&gt;
+            &lt;input type=&quot;hidden&quot; th:field=&quot;*{version}&quot;/&gt;
+            &lt;div class=&quot;form-group&quot;&gt;
+                &lt;label class=&quot;col-sm-2 control-label&quot;&gt;Bar Code:&lt;/label&gt;
+                &lt;div class=&quot;col-sm-10&quot;&gt;
+                    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; th:field=&quot;*{productId}&quot;/&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;form-group&quot;&gt;
+                &lt;label class=&quot;col-sm-2 control-label&quot;&gt;Description:&lt;/label&gt;
+                &lt;div class=&quot;col-sm-10&quot;&gt;
+                    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; th:field=&quot;*{description}&quot;/&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;form-group&quot;&gt;
+                &lt;label class=&quot;col-sm-2 control-label&quot;&gt;Price:&lt;/label&gt;
+                &lt;div class=&quot;col-sm-10&quot;&gt;
+                    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; th:field=&quot;*{price}&quot;/&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;form-group&quot;&gt;
+                &lt;label class=&quot;col-sm-2 control-label&quot;&gt;Image Url:&lt;/label&gt;
+                &lt;div class=&quot;col-sm-10&quot;&gt;
+                    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; th:field=&quot;*{imageUrl}&quot;/&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;row&quot;&gt;
+                &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot;&gt;Submit&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
 <h2 id="partie-3-securite-roles-et-permissions">Partie 3 Sécurité / Rôles et permissions</h2>
 <p>Ce que nous voulons réaliser:</p>
 <ul>
@@ -180,7 +535,56 @@ Si l'ID est manquant, le système ne peut pas savoir si c'est une MàJ ou une cr
 </ul>
 <p>A faire:</p>
 <ul>
-<li>Modification du controller de sécurité:</li>
+<li>Ajout dépendance <code>thymeleaf-extras-springsecurity5</code></li>
+<li>Ajout de la page login.html</li>
+</ul>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+&lt;head&gt;
+&lt;title&gt;Login Form&lt;/title&gt;
+&lt;!--/*/ &lt;th:block th:include=&quot;fragments/headerinc :: head&quot;&gt;&lt;/th:block&gt; /*/--&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;container&quot;&gt;
+        &lt;!--/*/ &lt;th:block th:include=&quot;fragments/menu :: header&quot;&gt;&lt;/th:block&gt; /*/--&gt;
+        &lt;div th:if=&quot;${param.error}&quot;&gt;
+            &lt;label style=&quot;color: red&quot;&gt;Invalid username and password.&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div th:if=&quot;${param.logout}&quot;&gt;
+            &lt;label&gt; You have been logged out. &lt;/label&gt;
+        &lt;/div&gt;
+
+        &lt;form th:action=&quot;@{/login}&quot; method=&quot;post&quot;&gt;
+
+            &lt;table class=&quot;table table-striped&quot;&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;&lt;label&gt; User Name : &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;
+                    &lt;/label&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;&lt;label&gt; Password : &lt;input type=&quot;password&quot; name=&quot;password&quot; /&gt;
+                    &lt;/label&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;
+                        &lt;button type=&quot;submit&quot; class=&quot;btn btn-default&quot;&gt;Sign In&lt;/button&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<ul>
+<li>
+<p>Ajout dans le ProductController de la gestion de la page login</p>
+</li>
+<li>
+<p>Modification du controller de sécurité:</p>
+</li>
 <li>Spécifier les url nécessitant de sécurité.</li>
 <li>Pour toutes les autres rajouter le code suivant:</li>
 </ul>
@@ -190,8 +594,725 @@ Si l'ID est manquant, le système ne peut pas savoir si c'est une MàJ ou une cr
 </code></pre>
 
 <ul>
-<li>Ajout dans le menu d'une condition de création de product: <code>sec:authorize="hasRole('ROLE_ADMIN')"</code></li>
-<li>Ajout de la page login.</li>
+<li>
+<p>Réutiliser le bean de création d'utilisateurs du TP Thymleaf-security</p>
+</li>
+<li>
+<p>Ajout dans le menu d'une condition de création de product: <code>sec:authorize="hasRole('ROLE_ADMIN')"</code></p>
+</li>
+</ul>
+<h2 id="partie-4-securisation-de-lapplication-avec-la-bdd">Partie 4 Sécurisation de l'application avec la BDD</h2>
+<h3 id="creation-des-entitees-jpa">Création des entitées JPA.</h3>
+<p>Bien lire les commentaires sur les classes. Les classes Roles et User ont une relation multivaleur (many-to-many) qui détermine que pour chaque enregistrement d'une table, il peut y avoir aucun, un ou plusieurs enregistrements d'une autre table qui lui soit liés.</p>
+<pre><code class="java">package com.boot.entities;
+
+/**
+ * Cette interface permet d avoir une base commune entre les classes User et Role
+ */
+public interface DomainObject {
+
+    Integer getId();
+
+    void setId(Integer id);
+}
+</code></pre>
+
+<pre><code class="java">package com.boot.entities;
+
+import javax.persistence.*;
+import java.util.Date;
+
+//Permer meme avec heritage de ne pas generer une table pour cet objet
+@MappedSuperclass
+public class AbstractDomainClass implements DomainObject {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Integer id;
+
+    @Version
+    private Integer version;
+
+    private Date dateCreated;
+    private Date lastUpdated;
+
+    @Override
+    public Integer getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    //Permet de s assurer que la date est bien mise a jour a chaque update en BDD
+    @PreUpdate
+    @PrePersist
+    public void updateTimeStamps() {
+        lastUpdated = new Date();
+        if (dateCreated==null) {
+            dateCreated = new Date();
+        }
+    }
+}
+</code></pre>
+
+<pre><code class="java">package com.boot.entities;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Entity
+public class Role extends AbstractDomainClass {
+
+    private String role;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable
+    // ~ defaults to @JoinTable(name = &quot;USER_ROLE&quot;, joinColumns = @JoinColumn(name = &quot;role_id&quot;),
+    //     inverseJoinColumns = @joinColumn(name = &quot;user_id&quot;))
+    private List&lt;User&gt; users = new ArrayList&lt;&gt;();
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public List&lt;User&gt; getUsers() {
+        return users;
+    }
+
+    public void setUsers(List&lt;User&gt; users) {
+        this.users = users;
+    }
+
+    public void addUser(User user){
+        if(!this.users.contains(user)){
+            this.users.add(user);
+        }
+
+        if(!user.getRoles().contains(this)){
+            user.getRoles().add(this);
+        }
+    }
+
+    public void removeUser(User user){
+        this.users.remove(user);
+        user.getRoles().remove(this);
+    }
+
+}
+</code></pre>
+
+<pre><code class="java"> package com.boot.entities;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Entity
+public class User extends AbstractDomainClass  {
+
+    private String username;
+
+    //Le mot de passe est annote Transient afin de ne pas stoquer le mot de passe en clair
+    //mais d utiliser celui encrypte
+    @Transient
+    private String password;
+
+    private String encryptedPassword;
+    private Boolean enabled = true;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable
+    // ~ defaults to @JoinTable(name = &quot;USER_ROLE&quot;, joinColumns = @JoinColumn(name = &quot;user_id&quot;),
+    //     inverseJoinColumns = @joinColumn(name = &quot;role_id&quot;))
+    private List&lt;Role&gt; roles = new ArrayList&lt;&gt;();
+    private Integer failedLoginAttempts = 0;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEncryptedPassword() {
+        return encryptedPassword;
+    }
+
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+
+    public List&lt;Role&gt; getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List&lt;Role&gt; roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(Role role){
+        if(!this.roles.contains(role)){
+            this.roles.add(role);
+        }
+
+        if(!role.getUsers().contains(this)){
+            role.getUsers().add(this);
+        }
+    }
+
+    public void removeRole(Role role){
+        this.roles.remove(role);
+        role.getUsers().remove(this);
+    }
+
+    public Integer getFailedLoginAttempts() {
+        return failedLoginAttempts;
+    }
+
+    public void setFailedLoginAttempts(Integer failedLoginAttempts) {
+        this.failedLoginAttempts = failedLoginAttempts;
+    }
+}
+</code></pre>
+
+<h3 id="repositories-jpa">Repositories JPA</h3>
+<ul>
+<li>
+<p>Nous allons créer un UserRepository et un RoleRepository sur le même exemple que le ProductRepository.</p>
+</li>
+<li>
+<p>Dans UserRepository ajouter la méthode</p>
+</li>
+</ul>
+<p><code>User findByUsername(String username);</code></p>
+<ul>
+<li>Les classes d'implémentation seront générées automatiquement par Spring JPA.</li>
+</ul>
+<h3 id="services-jpa">Services JPA</h3>
+<p><code>RoleService</code> et <code>UserService</code> étendent <code>CRUDService</code> qui définit les opérations CRUD de base sur les entités.
+<code>UserService</code>, avec la méthode supplémentaire     <code>User findByUsername(String username);</code> , est une interface de service plus spécialisée pour les opérations CRUD sur <code>User</code>.</p>
+<p>Nous avons rendu les interfaces de service génériques pour masquer nos implémentations de service en utilisant le design pattern Façade. Les implémentations peuvent être Spring Data JPA avec référentiel, DAO, ou même JDBC simple, ou un service Web externe. Le code client n'a pas besoin de connaître l'implémentation. En utilisant des interfaces, nous sommes en mesure de tirer parti de plusieurs implémentations concrètes des services.</p>
+<ul>
+<li>
+<p>Créer les trois classes (idem que ProductService)</p>
+</li>
+<li>
+<p>Completer UserServiceImpl</p>
+</li>
+</ul>
+<pre><code class="java">package com.boot.services;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.boot.entities.User;
+import com.boot.repositories.UserRepository;
+import com.boot.services.security.EncryptionService;
+
+
+...
+public class UserServiceImpl implements UserService {
+    // a injecter
+    private UserRepository userRepository;
+
+    ...
+    // a injecter
+    private EncryptionService encryptionService;
+
+    ....
+
+    @Override
+    public List&lt;?&gt; listAll() {
+        ...
+        return users;
+    }
+
+    @Override
+    public User getById(Integer id) {
+        return ...
+    }
+
+    @Override
+    public User saveOrUpdate(User domainObject) {
+        if(domainObject.getPassword() != null){
+            domainObject.setEncryptedPassword(encryptionService.encryptString(domainObject.getPassword()));
+        }
+        return ...
+    }
+    @Override
+      @Transactional
+       public void delete(Integer id) {
+        ...
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return ...
+    }
+}
+
+
+</code></pre>
+
+<ul>
+<li>Completer RoleServiceImpl</li>
+</ul>
+<pre><code class="java">package com.boot.services;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
+
+import com.boot.entities.Role;
+import com.boot.repositories.RoleRepository;
+
+...
+public class RoleServiceImpl implements RoleService {
+    //inject
+    private RoleRepository roleRepository;
+
+    ...
+
+    @Override
+    public List&lt;?&gt; listAll() {
+       ...
+        return roles;
+    }
+
+    @Override
+    public Role getById(Integer id) {
+        return ...
+    }
+
+    @Override
+    public Role saveOrUpdate(Role domainObject) {
+        return ...
+    }
+
+    @Override
+    public void delete(Integer id) {
+        ...
+    }
+}
+
+</code></pre>
+
+<h3 id="cryptage-du-mot-de-passe">Cryptage du mot de passe</h3>
+<ul>
+<li>Ajout des dépendances suivantes</li>
+</ul>
+<pre><code class="xml">        &lt;dependency&gt;
+            &lt;groupId&gt;org.jasypt&lt;/groupId&gt;
+            &lt;artifactId&gt;jasypt-springsecurity4&lt;/artifactId&gt;
+            &lt;version&gt;1.9.3&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.github.ulisesbocchio&lt;/groupId&gt;
+            &lt;artifactId&gt;jasypt-spring-boot-starter&lt;/artifactId&gt;
+            &lt;version&gt;3.0.3&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
+
+<ul>
+<li>Dans la classe placer les bonnes annotations</li>
+</ul>
+<pre><code class="java">package com.boot.configuration;
+
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
+...
+public class CommonBeanConfig {
+    ...
+    public StrongPasswordEncryptor strongEncryptor() {
+        StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+        return encryptor;
+    }
+}
+
+
+</code></pre>
+
+<ul>
+<li>Ajout de EncryptionService</li>
+</ul>
+<pre><code class="java">package com.boot.services.security;
+
+public interface EncryptionService {
+    String encryptString(String input);
+    boolean checkPassword(String plainPassword, String encryptedPassword);
+}
+
+</code></pre>
+
+<ul>
+<li>
+<p>Implémenter EncryptionServiceImpl en utilisant org.jasypt.util.password.StrongPasswordEncryptor</p>
+</li>
+<li>
+<p>Spring Security fournit une interface UserDetailsService pour rechercher le nom d'utilisateur, le mot de passe et GrantedAuthorities pour tout utilisateur donné. Cette interface ne fournit qu'une seule méthode, loadUserByUsername (). Cette méthode renvoie une implémentation de l'interface UserDetails de Spring Security qui fournit des informations utilisateur.</p>
+</li>
+<li>
+<p>Compléter</p>
+</li>
+</ul>
+<pre><code class="java">package com.boot.services.security;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
+
+
+public class UserDetailsImpl implements UserDetails {
+
+    private Collection&lt;SimpleGrantedAuthority&gt; authorities;
+    private String username;
+    private String password;
+    private Boolean enabled = true;
+...
+        public void setAuthorities(Collection&lt;SimpleGrantedAuthority&gt; authorities) {
+                this.authorities = authorities;
+        }
+}
+
+</code></pre>
+
+<ul>
+<li>Dans cette classe, nous avons défini les champs de notre modèle de données et leurs méthodes setter correspondantes. Le <code>SimpleGrantedAuthority</code> que nous avons définit est une implémentation Spring Security d'une autorité que nous convertirons de notre rôle. Pensez à une autorité comme étant une «permission» ou un «droit» généralement exprimé sous forme de chaîne de caractère.</li>
+</ul>
+<p>Nous devons fournir une implémentation de la méthode <code>loadUserByUsername ()</code> de <code>UserDetailsService</code>. Mais le défi est que la méthode <code>findByUsername ()</code> de notre <code>UserService</code> renvoie une entité <code>User</code>, tandis que Spring Security attend un objet <code>UserDetails</code> de la méthode <code>loadUserByUsername ()</code>.</p>
+<p>Nous allons créer un convertisseur pour cela afin de convertir l'implémentation <code>User</code> en <code>UserDetails</code>.</p>
+<ul>
+<li>Compléter:</li>
+</ul>
+<pre><code class="java">package com.boot.services.security;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
+import com.boot.entities.User;
+
+...
+public class UserToUserDetails implements Converter&lt;User, UserDetails&gt; {
+    @Override
+    public UserDetails convert(User user) {
+        UserDetailsImpl userDetails = new UserDetailsImpl();
+
+        if (user != null) {
+            userDetails.set...// tout setter
+            Collection&lt;SimpleGrantedAuthority&gt; authorities = new ArrayList&lt;&gt;();
+            user.getRoles().forEach(role -&gt; {
+                authorities.add(new SimpleGrantedAuthority(role.getRole()));
+            });
+            userDetails.setAuthorities(authorities);
+        }
+
+        return userDetails;
+    }
+}
+
+</code></pre>
+
+<ul>
+<li>Cette classe implémente l'interface Spring Core Coverter et surcharge la méthode <code>convert ()</code> qui accepte un objet User à convertir.</li>
+</ul>
+<p>Le convertisseur étant prêt, il est désormais facile d’implémenter l’interface <code>UserDetailsService</code>. La classe d'implémentation est la suivante.</p>
+<pre><code class="java">package com.boot.services.security;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.boot.entities.User;
+import com.boot.services.UserService;
+
+@Service(&quot;userDetailsService&quot;)
+public class UserDetailsServiceImpl implements UserDetailsService {
+
+    private UserService userService; // to set
+    private Converter&lt;User, UserDetails&gt; userUserDetailsConverter;
+
+    ...
+
+    ...
+    @Qualifier(value = &quot;userToUserDetails&quot;)
+    public void setUserUserDetailsConverter(Converter&lt;User, UserDetails&gt; userUserDetailsConverter) {
+        this.userUserDetailsConverter = userUserDetailsConverter;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userUserDetailsConverter.convert(...//utiliser userService
+    }
+}
+
+</code></pre>
+
+<h3 id="configuration-de-la-securite">Configuration de la Sécurité</h3>
+<ul>
+<li>La classe de configuration de sécurité actuelle, <code>SpringSecConfig</code>, étend <code>WebSecurityConfigurerAdapter</code> pour configurer deux choses. Un fournisseur d'authentification et les URL de l'application à protéger.Il reste à enregistrer le fournisseur d'authentification DAO pour une utilisation avec Spring Security.</li>
+</ul>
+<p>Nous allons commencer par mettre en place un encodeur de mot de passe pour encoder les mots de passe présents dans l'objet <code>UserDetails</code> renvoyé par le <code>configuredUserDetailsService</code>. Nous allons définir un nouveau bean pour <code>PasswordEncoder</code> de Spring Security qui prend en charge le bean <code>StrongPassordEncryptor</code>.</p>
+<p>Rappelez-vous que nous avons créé <code>StrongPassordEncryptor</code> plus tôt dans la classe de configuration <code>CommonBeanConfig</code>?</p>
+<ul>
+<li>Compléter la classe</li>
+</ul>
+<pre><code class="java">package com.boot.configuration;
+
+import org.jasypt.springsecurity4.crypto.password.PasswordEncoder;
+import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+...
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+  private AuthenticationProvider authenticationProvider;
+
+  ...
+  @Qualifier(&quot;daoAuthenticationProvider&quot;)
+  public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
+      this.authenticationProvider = authenticationProvider;
+  }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .antMatchers(&quot;/product/edit/*&quot;,&quot;/product/new&quot;,&quot;/product/delete/*&quot;,&quot;/product/show/*&quot;).authenticated()
+            .anyRequest().permitAll()
+            .and().formLogin().loginPage(&quot;/login&quot;).permitAll()
+            .and().logout().permitAll();
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+    }
+
+    ...
+    public PasswordEncoder passwordEncoder(StrongPasswordEncryptor passwordEncryptor){
+        PasswordEncoder passwordEncoder = new PasswordEncoder();
+        passwordEncoder.setPasswordEncryptor(passwordEncryptor);
+        return passwordEncoder;
+    }
+    ...
+    public DaoAuthenticationProvider daoAuthenticationProvider(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        return daoAuthenticationProvider;
+    }
+    ...
+    public void configureAuthManager(AuthenticationManagerBuilder authenticationManagerBuilder){
+        authenticationManagerBuilder.authenticationProvider(authenticationProvider);
+    }
+}
+
+</code></pre>
+
+<ul>
+<li><code>PasswordEncoder</code> va utiliser la bibliothèque <code>Jasypt</code> pour encoder le mot de passe et vérifier que les mots de passe correspondent. Le <code>UserDetailsService</code> récupérera l'objet User de la base de données et le transférera à Spring Security en tant qu'objet <code>UserDetails</code>.</li>
+</ul>
+<h3 id="initialisation-de-lapplication">Initialisation de l'Application</h3>
+<p>Pour les données de départ de l'application, nous avons une classe d'implémentation <code>ApplicationListener</code> qui est appelée sur le <code>ContextRefresedEvent</code> au démarrage. Dans cette classe, nous utiliserons Spring pour injecter les référentiels JPA <code>UserRepository</code> et <code>RoleRepository</code>. Nous allons créer deux entités <code>User</code> et deux <code>Role</code> et les enregistrer dans la base de données au démarrage de l'application.</p>
+<ul>
+<li>
+<p>Supprimer la classe <code>ProductLoader</code></p>
+</li>
+<li>
+<p>Compléter la classe suivante</p>
+</li>
+</ul>
+<pre><code class="java">package com.boot.mocks;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
+
+import com.boot.entities.Product;
+import com.boot.entities.Role;
+import com.boot.entities.User;
+import com.boot.repositories.ProductRepository;
+import com.boot.services.RoleService;
+import com.boot.services.UserService;
+
+...
+public class SpringJpaBootstrap implements ApplicationListener&lt;ContextRefreshedEvent&gt; {
+
+    private ProductRepository productRepository; //To inject
+    private UserService userService; //To inject
+    private RoleService roleService; //To inject
+
+    private Logger log = LoggerFactory.getLogger(SpringJpaBootstrap.class);
+
+...
+
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        loadProducts();
+        loadUsers();
+        loadRoles();
+        assignUsersToUserRole();
+        assignUsersToAdminRole();
+    }
+
+    private void loadProducts() {
+        Product shirt = new Product();
+        shirt.setDescription(&quot; Chemise Lacouste&quot;);
+        shirt.setPrice(18.95f);
+        shirt.setImageUrl(&quot;https://www.vision-naire.com/wp-content/uploads/2016/11/T-SHIRT-V-150x150.jpg&quot;);
+        shirt.setProductId(&quot;235268845711068308&quot;);
+        productRepository.save(shirt);
+
+        log.info(&quot;Saved Shirt - id: &quot; + shirt.getId());
+
+        Product pant = new Product();
+        pant.setDescription(&quot;Pantalon Hugo Boot&quot;);
+        pant.setPrice(120.9f);
+        pant.setImageUrl(&quot;https://www.vision-naire.com/wp-content/uploads/2020/06/jogging-visionnaire-2-100x100.jpg&quot;);
+        pant.setProductId(&quot;168639393495335947&quot;);
+        productRepository.save(pant);
+
+        log.info(&quot;Saved Mug - id:&quot; + pant.getId());
+    }
+
+    private void loadUsers() {
+        User user1 = new User();
+        user1.setUsername(&quot;user&quot;);
+        user1.setPassword(&quot;user&quot;);
+        userService.saveOrUpdate(user1);
+
+        User user2 = new User();
+        user2.setUsername(&quot;admin&quot;);
+        user2.setPassword(&quot;admin&quot;);
+        userService.saveOrUpdate(user2);
+
+    }
+
+    private void loadRoles() {
+        Role role = ...
+                // Créer et enregistrer les rôles &quot;ADMIN&quot; et &quot;USER&quot;
+    }
+    private void assignUsersToUserRole() {
+        List&lt;Role&gt; roles = ...
+        List&lt;User&gt; users = ...
+
+        roles.forEach(role -&gt; {
+            if (role.getRole().equalsIgnoreCase(&quot;USER&quot;)) {
+                            ...
+                            //assigner le rôle à l'utilisateur &quot;user&quot;
+
+            }
+        });
+    }
+    private void assignUsersToAdminRole() {
+        List&lt;Role&gt; roles = ...
+        List&lt;User&gt; users = ...
+
+        roles.forEach(role -&gt; {
+            if (role.getRole().equalsIgnoreCase(&quot;ADMIN&quot;)) {
+                            ...
+                            //assigner le rôle à l'utilisateur &quot;admin&quot;
+            }
+        });
+    }
+}
+</code></pre>
+
+<h3 id="thymleaf-security">Thymleaf Security</h3>
+<ul>
+<li>
+<p>Actuellement, USER et ROLE sont référencés à partir du code de couche de présentation comme ROLE_USER et ROLE_ADMIN. Cela était nécessaire car nous nous appuyions sur le fournisseur d'authentification en mémoire de Spring Security pour gérer nos utilisateurs et nos rôles, et la fonctionnalité interne de Spring Security mappe un rôle configuré au nom de rôle précédé de ROLE_.</p>
+</li>
+<li>
+<p>Avec le fournisseur d'authentification DAO, nos rôles sont mappés aux autorités telles quelles (nous l'avons fait dans le convertisseur <code>UserToUserDetails</code>), et nous pouvons les référer directement à partir du code en tant que USER et ADMIN.</p>
+</li>
+<li>
+<p>Le deuxième changement est apporté par GrantedAuthority utilisé par l'interface Spring Security <code>UserDetails</code>. Si vous vous en souvenez, nous avons mappé notre implémentation de rôle à <code>SimpleGrantedAuthority</code> dans le convertisseur <code>UserToUserDetails</code>.</p>
+</li>
+<li>
+<p>Par conséquent, dans les modèles Thymeleaf, nous devons changer les expressions d'autorisation hasRole () et hasAnyRole () en hasAuthority () et hasAnyAuthorities ()</p>
+</li>
+<li>
+<p>Changer les templates menu et produit</p>
+</li>
 </ul>
               
             </div>
