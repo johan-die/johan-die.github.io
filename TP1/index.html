@@ -836,6 +836,25 @@ public class User extends AbstractDomainClass  {
 <li>Les classes d'implémentation seront générées automatiquement par Spring JPA.</li>
 </ul>
 <h3 id="services-jpa">Services JPA</h3>
+<ul>
+<li>Ajouter :</li>
+</ul>
+<pre><code class="java">package com.boot.services;
+
+import java.util.List;
+
+public interface CRUDService&lt;T&gt; {
+    List&lt;?&gt; listAll();
+
+    T getById(Integer id);
+
+    T saveOrUpdate(T domainObject);
+
+    void delete(Integer id);
+}
+
+</code></pre>
+
 <p><code>RoleService</code> et <code>UserService</code> étendent <code>CRUDService</code> qui définit les opérations CRUD de base sur les entités.
 <code>UserService</code>, avec la méthode supplémentaire     <code>User findByUsername(String username);</code> , est une interface de service plus spécialisée pour les opérations CRUD sur <code>User</code>.</p>
 <p>Nous avons rendu les interfaces de service génériques pour masquer nos implémentations de service en utilisant le design pattern Façade. Les implémentations peuvent être Spring Data JPA avec référentiel, DAO, ou même JDBC simple, ou un service Web externe. Le code client n'a pas besoin de connaître l'implémentation. En utilisant des interfaces, nous sommes en mesure de tirer parti de plusieurs implémentations concrètes des services.</p>
