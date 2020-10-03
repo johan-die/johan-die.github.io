@@ -1133,7 +1133,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 <h3 id="configuration-de-la-securite">Configuration de la Sécurité</h3>
 <ul>
-<li>La classe de configuration de sécurité actuelle, <code>SpringSecConfig</code>, étend <code>WebSecurityConfigurerAdapter</code> pour configurer deux choses. Un fournisseur d'authentification et les URL de l'application à protéger.Il reste à enregistrer le fournisseur d'authentification DAO pour une utilisation avec Spring Security.</li>
+<li>La classe de configuration de sécurité actuelle, <code>SecurityConfiguration</code>, étend <code>WebSecurityConfigurerAdapter</code> pour configurer deux choses. Un fournisseur d'authentification et les URL de l'application à protéger.Il reste à enregistrer le fournisseur d'authentification DAO pour une utilisation avec Spring Security.</li>
 </ul>
 <p>Nous allons commencer par mettre en place un encodeur de mot de passe pour encoder les mots de passe présents dans l'objet <code>UserDetails</code> renvoyé par le <code>configuredUserDetailsService</code>. Nous allons définir un nouveau bean pour <code>PasswordEncoder</code> de Spring Security qui prend en charge le bean <code>StrongPassordEncryptor</code>.</p>
 <p>Rappelez-vous que nous avons créé <code>StrongPassordEncryptor</code> plus tôt dans la classe de configuration <code>CommonBeanConfig</code>?</p>
