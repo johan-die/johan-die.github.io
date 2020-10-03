@@ -1320,7 +1320,7 @@ public class SpringJpaBootstrap implements ApplicationListener&lt;ContextRefresh
 <p>Le deuxième changement est apporté par GrantedAuthority utilisé par l'interface Spring Security <code>UserDetails</code>. Si vous vous en souvenez, nous avons mappé notre implémentation de rôle à <code>SimpleGrantedAuthority</code> dans le convertisseur <code>UserToUserDetails</code>.</p>
 </li>
 <li>
-<p>Par conséquent, dans les modèles Thymeleaf, nous devons changer les expressions d'autorisation hasRole () et hasAnyRole () en hasAuthority () et hasAnyAuthorities ()</p>
+<p>Par conséquent, dans les modèles Thymeleaf, nous devons changer les expressions d'autorisation hasRole () et hasAnyRole () en hasAuthority () et hasAnyAuthority ()</p>
 </li>
 <li>
 <p>Changer les templates menu et produit</p>
