@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>TP2 - Spring Boot</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "TP2";
+    var mkdocs_page_input_path = "TP2.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Spring Boot</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../TP1/">TP1</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">TP2</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#partie-1-exemple-personne">Partie 1 Exemple Personne</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#partie-2-vraie-bdd">Partie 2 Vraie BDD</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#partie-3-optimisations">Partie 3 Optimisations</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Spring Boot</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>TP2</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="tp2">TP2</h1>
+<h2 id="partie-1-exemple-personne">Partie 1 Exemple Personne</h2>
+<ul>
+<li>
+<p>Créer un controller <code>ConsoleController</code> dédié à la console associant l'adresse <code>/console</code> à la redirection vers <code>h2-console</code></p>
+</li>
+<li>
+<p>Créer un controller <code>MainController</code> permettant de gerer les appels sur nos repository retournant les objets en JSON</p>
+</li>
+<li>
+<p>Voici les paramètres à utiliser pour les deux prochaines méthode: <code>@RequestParam(name = "method", required = true, defaultValue = "id") String method, @RequestParam(name = "value", required = true) String value</code> chaque méthode devra avoir un switch prenant en entrée <code>method</code></p>
+</li>
+<li>Associer l'adresse <code>/person</code> avec les méthodes retournant qu'une valeur (dans le switch)</li>
+<li>
+<p>Associer l'adresse <code>/persons</code> avec les méthodes retournant une liste (dans le switch)</p>
+</li>
+<li>
+<p>Acceder à la console et créer une querry permettant d'afficher toutes les personnes commençant par <code>S</code></p>
+</li>
+<li>
+<p>Créer une nouvelle méthode dans le <code>PersonRepository</code> <code>findNameStartingByS</code> et y mapper la query obtenue précédemment sachant que dans le code ce n'est pas les tables et champs de la BDD qu'il faut utiliser mais ceux de l'<code>Entity</code></p>
+</li>
+<li>
+<p>Refaire la même query en language naturel (uniquement en java)</p>
+</li>
+<li>
+<p>S'ammuser à tester d'autres query</p>
+</li>
+</ul>
+<h2 id="partie-2-vraie-bdd">Partie 2 Vraie BDD</h2>
+<ul>
+<li>Créer les <code>Entity</code>  <code>Agent, Orders, Customer</code> suivant le schéma ci dessous et la déclaration des tables
+<img alt="springThymeleaf" src="../TP2img/schema.png" /></li>
+</ul>
+<pre><code class="sql">CREATE TABLE  &quot;AGENTS&quot; 
+   (    
+    &quot;AGENT_CODE&quot; CHAR(6) NOT NULL PRIMARY KEY, 
+    &quot;AGENT_NAME&quot; CHAR(40), 
+    &quot;WORKING_AREA&quot; CHAR(35), 
+    &quot;COMMISSION&quot; NUMBER(10,2), 
+    &quot;PHONE_NO&quot; CHAR(15), 
+    &quot;COUNTRY&quot; VARCHAR2(25) 
+     );
+
+
+CREATE TABLE  &quot;CUSTOMER&quot; 
+   (    
+    &quot;CUST_CODE&quot; VARCHAR2(6) NOT NULL PRIMARY KEY, 
+    &quot;CUST_NAME&quot; VARCHAR2(40) NOT NULL, 
+    &quot;CUST_CITY&quot; CHAR(35), 
+    &quot;WORKING_AREA&quot; VARCHAR2(35) NOT NULL, 
+    &quot;CUST_COUNTRY&quot; VARCHAR2(20) NOT NULL, 
+    &quot;GRADE&quot; NUMBER, 
+    &quot;OPENING_AMT&quot; NUMBER(12,2) NOT NULL, 
+    &quot;RECEIVE_AMT&quot; NUMBER(12,2) NOT NULL, 
+    &quot;PAYMENT_AMT&quot; NUMBER(12,2) NOT NULL, 
+    &quot;OUTSTANDING_AMT&quot; NUMBER(12,2) NOT NULL, 
+    &quot;PHONE_NO&quot; VARCHAR2(17) NOT NULL, 
+    &quot;AGENT_CODE&quot; CHAR(6) NOT NULL REFERENCES AGENTS
+); 
+
+CREATE TABLE  &quot;ORDERS&quot; 
+   (
+    &quot;ORD_NUM&quot; NUMBER(6,0) NOT NULL PRIMARY KEY, 
+    &quot;ORD_AMOUNT&quot; NUMBER(12,2) NOT NULL, 
+    &quot;ADVANCE_AMOUNT&quot; NUMBER(12,2) NOT NULL, 
+    &quot;ORD_DATE&quot; DATE NOT NULL, 
+    &quot;CUST_CODE&quot; VARCHAR2(6) NOT NULL REFERENCES CUSTOMER, 
+    &quot;AGENT_CODE&quot; CHAR(6) NOT NULL REFERENCES AGENTS, 
+    &quot;ORD_DESCRIPTION&quot; VARCHAR2(60) NOT NULL
+   );
+</code></pre>
+
+<ul>
+<li>Créer les reposirory associés et ajouter des méthodes pour:</li>
+</ul>
+<p>-- Trouver des agents du même nom , trouver des agents à la commission plus grande que la valeur en paramètre, trouver des agents par Working Area</p>
+<p>-- Trouver des customers par nom, Trouver des customers par ville et Trouver des customers par <code>openingAtm</code> plus grand que le paramètre</p>
+<p>-- Trouver des orders par agent code et Trouver des orders par orderAmount plus grand que le paramètre</p>
+<ul>
+<li>
+<p>Créer des requètes de jointure pour chaque order récupérer les valeurs associées d' agent et customer </p>
+</li>
+<li>
+<p>Dans le controller y ajouter les méthodes de la même façon que pour les personnes et y binder toutes les méthodes.</p>
+</li>
+</ul>
+<h2 id="partie-3-optimisations">Partie 3 Optimisations</h2>
+<ul>
+<li>
+<p>remplacer pour les clés externes l'annotation <code>@column</code> par <code>@ManyToOne
+    @JoinColumn(
+     name="nom de la colonne", unique=false, nullable=false, updatable=true)</code> et remplacer le type du champ par l'objet voulu.</p>
+</li>
+<li>
+<p>Afficher la liste des orders. Que constatez vous?</p>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../TP1/" class="btn btn-neutral" title="TP1"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../TP1/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
