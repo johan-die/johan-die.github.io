@@ -55,6 +55,22 @@
                     <li class="toctree-l1"><a class="reference internal" href="../TP1/">TP1</a>
                     </li>
                 </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">TP2</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#partie-1-exemple-personne">Partie 1 Exemple Personne</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#partie-2-vraie-bdd">Partie 2 Vraie BDD</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#partie-3-optimisations">Partie 3 Optimisations</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#fin">Fin</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
       </div>
     </div>
     </nav>
@@ -113,7 +129,7 @@
 <p>Refaire la même query en language naturel (uniquement en java)</p>
 </li>
 <li>
-<p>S'ammuser à tester d'autres query</p>
+<p>Créer deux autres query de type different de la première</p>
 </li>
 </ul>
 <h2 id="partie-2-vraie-bdd">Partie 2 Vraie BDD</h2>
@@ -161,7 +177,12 @@ CREATE TABLE  &quot;ORDERS&quot;
 </code></pre>
 
 <ul>
-<li>Créer les reposirory associés et ajouter des méthodes pour:</li>
+<li>
+<p>Charger les données de dépot Github dataTP2 soit manuellement soit automatiquement.</p>
+</li>
+<li>
+<p>Créer les repository associés et ajouter des méthodes pour:</p>
+</li>
 </ul>
 <p>-- Trouver des agents du même nom , trouver des agents à la commission plus grande que la valeur en paramètre, trouver des agents par Working Area</p>
 <p>-- Trouver des customers par nom, Trouver des customers par ville et Trouver des customers par <code>openingAtm</code> plus grand que le paramètre</p>
@@ -182,13 +203,27 @@ CREATE TABLE  &quot;ORDERS&quot;
      name="nom de la colonne", unique=false, nullable=false, updatable=true)</code> et remplacer le type du champ par l'objet voulu.</p>
 </li>
 <li>
-<p>Afficher la liste des orders. Que constatez vous?</p>
+<p>Afficher la liste des orders. Que constatez vous? Ecrire la réponse en commentaire après la ligne</p>
 </li>
 </ul>
+<pre><code class="java">
+public class ExoBddDaoApplication {
+</code></pre>
+
+<h3 id="fin">Fin</h3>
+<p>Supprimer le dossier target, zipper le projet de me l'envoyer pr mail.
+Vérifier l'envoi du mail (pas de mail de retour à cause de la pièce jointe)</p>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../TP1/" class="btn btn-neutral" title="TP1"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -211,6 +246,8 @@ CREATE TABLE  &quot;ORDERS&quot;
   <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
+      
+        <span><a href="../TP1/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
     </span>
