@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>TP2 - Spring Boot</title>
+  <title>Rattrapage - Spring Boot</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "TP2";
-    var mkdocs_page_input_path = "TP2.md";
+    var mkdocs_page_name = "Rattrapage";
+    var mkdocs_page_input_path = "Rattrapage.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -75,7 +75,7 @@
     
       
     
-    <li>TP2</li>
+    <li>Rattrapage</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -87,36 +87,23 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="tp2">TP2</h1>
+                <h1 id="rattrapage">Rattrapage</h1>
 <h2 id="partie-1-exemple-personne">Partie 1 Exemple Personne</h2>
 <ul>
-<li>
-<p>Créer un controller <code>ConsoleController</code> dédié à la console associant l'adresse <code>/console</code> à la redirection vers <code>h2-console</code></p>
-</li>
-<li>
-<p>Créer un controller <code>MainController</code> permettant de gerer les appels sur nos repository retournant les objets en JSON</p>
-</li>
-<li>
-<p>Voici les paramètres à utiliser pour les deux prochaines méthode: <code>@RequestParam(name = "method", required = true, defaultValue = "id") String method, @RequestParam(name = "value", required = true) String value</code> chaque méthode devra avoir un switch prenant en entrée <code>method</code></p>
-</li>
-<li>Associer l'adresse <code>/person</code> avec les méthodes retournant qu'une valeur (dans le switch)</li>
-<li>
-<p>Associer l'adresse <code>/persons</code> avec les méthodes retournant une liste (dans le switch)</p>
-</li>
-<li>
-<p>Acceder à la console et créer une querry permettant d'afficher toutes les personnes commençant par <code>S</code></p>
-</li>
-<li>
-<p>Créer une nouvelle méthode dans le <code>PersonRepository</code> <code>findNameStartingByS</code> et y mapper la query obtenue précédemment sachant que dans le code ce n'est pas les tables et champs de la BDD qu'il faut utiliser mais ceux de l'<code>Entity</code></p>
-</li>
-<li>
-<p>Refaire la même query en language naturel (uniquement en java)
- <a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods">Doc spring</a></p>
-</li>
-<li>
-<p>Créer deux autres query de type different de la première</p>
-</li>
+<li>Cette partie (non notée) sert d'exemple afin de pouvoir réaliser la partie 2 (notée). Il est très vivement conseillé de la réaliser. Elle permet une meilleure réalisation de la suite. Les instructions de 1 à 4 suivantes ont déjà été réalisées afin de vous aider. Commencer par le 5)</li>
 </ul>
+<p>1) Créer un controller <code>ConsoleController</code> dédié à la console associant l'adresse <code>/console</code> à la redirection vers <code>h2-console</code></p>
+<p>2) Créer un controller <code>MainController</code> permettant de gerer les appels sur nos repository retournant les objets en JSON</p>
+<ul>
+<li>Voici les paramètres à utiliser pour les deux prochaines méthode: <code>@RequestParam(name = "method", required = true, defaultValue = "id") String method, @RequestParam(name = "value", required = true) String value</code> chaque méthode devra avoir un switch prenant en entrée <code>method</code></li>
+</ul>
+<p>3)  Associer l'adresse <code>/person</code> avec les méthodes retournant qu'une valeur (dans le switch)</p>
+<p>4) Associer l'adresse <code>/persons</code> avec les méthodes retournant une liste (dans le switch)</p>
+<p>5) Acceder à la console et créer une querry permettant d'afficher toutes les personnes commençant par <code>S</code></p>
+<p>6) Créer une nouvelle méthode dans le <code>PersonRepository</code> <code>findNameStartingByS</code> et y mapper la query obtenue précédemment sachant que dans le code ce n'est pas les tables et champs de la BDD qu'il faut utiliser mais ceux de l'<code>Entity</code></p>
+<p>7) Refaire la même query en language naturel (uniquement en java)
+ <a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods">Doc spring</a></p>
+<p>8) Créer deux autres query de type different de la première</p>
 <h2 id="partie-2-vraie-bdd">Partie 2 Vraie BDD</h2>
 <ul>
 <li>Créer les <code>Entity</code>  <code>Agent, Orders, Customer</code> suivant le schéma ci dessous et la déclaration des tables. Pour le moment considerer les clés étrangères comme des champs simples. Elles seront utilisées dans la partie 3.
@@ -167,12 +154,10 @@ CREATE TABLE  &quot;ORDERS&quot;
 </li>
 <li>
 <p>Créer les repository associés et ajouter des méthodes pour:</p>
+<p>1) Trouver des agents par nom, trouver des agents à la commission plus petite que la valeur en paramètre, trouver des agents par COUNTRY</p>
+<p>2) Trouver des customers par nom, Trouver des customers par ville et Trouver des customers par <code>openingAtm</code> plus petit que le paramètre</p>
+<p>3) Trouver des orders par agent code et Trouver des orders par orderAmount plus petit que le paramètre</p>
 </li>
-</ul>
-<p>-- Trouver des agents par nom, trouver des agents à la commission plus grande que la valeur en paramètre, trouver des agents par Working Area</p>
-<p>-- Trouver des customers par nom, Trouver des customers par ville et Trouver des customers par <code>openingAtm</code> plus grand que le paramètre</p>
-<p>-- Trouver des orders par agent code et Trouver des orders par orderAmount plus grand que le paramètre</p>
-<ul>
 <li>
 <p>Créer des requètes de jointure pour chaque order récupérer les valeurs associées d'agent et customer </p>
 </li>
@@ -183,7 +168,7 @@ CREATE TABLE  &quot;ORDERS&quot;
 <h2 id="partie-3-optimisations">Partie 3 Optimisations</h2>
 <ul>
 <li>
-<p>remplacer pour les clés externes l'annotation <code>@column</code> par <code>@ManyToOne
+<p>Commenter l'annotation <code>@column</code>  pour les clés externes  et rajouter  <code>@ManyToOne
     @JoinColumn(
      name="nom de la colonne", unique=false, nullable=false, updatable=true)</code> et remplacer le type du champ par l'objet voulu.</p>
 </li>
