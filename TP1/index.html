@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>TP1 - Spring Boot</title>
+  <title>TP_SECU - Spring Boot</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "TP1";
+    var mkdocs_page_name = "TP_SECU";
     var mkdocs_page_input_path = "TP1.md";
     var mkdocs_page_url = null;
   </script>
@@ -50,8 +50,40 @@
                     <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
                     </li>
                 </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../TP2/">TP_BDD</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">TP_SECU</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#partie-1-bdd">Partie 1 BDD</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#partie-2-mvc">Partie 2 MVC</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#crud">CRUD</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#creation-mise-a-jour-dun-product">Création / mise à jour d'un product</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#partie-3-securite-roles-et-permissions">Partie 3 Sécurité / Rôles et permissions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#partie-4-securisation-de-lapplication-avec-la-bdd">Partie 4 Sécurisation de l'application avec la BDD</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#creation-des-entitees-jpa">Création des entitées JPA.</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#repositories-jpa">Repositories JPA</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#services-jpa">Services JPA</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cryptage-du-mot-de-passe">Cryptage du mot de passe</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#configuration-de-la-securite">Configuration de la Sécurité</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#initialisation-de-lapplication">Initialisation de l'Application</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#thymleaf-security">Thymleaf Security</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
                     </li>
                 </ul>
       </div>
@@ -75,7 +107,7 @@
     
       
     
-    <li>TP1</li>
+    <li>TP_SECU</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -87,7 +119,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="tp1">TP1</h1>
+                <h1 id="tp-secu">TP SECU</h1>
 <p>url:</p>
 <p><code>https://start.spring.io/starter.zip?name=webapp&amp;groupId=com.boot&amp;artifactId=webapp&amp;version=0.0.1-SNAPSHOT&amp;description=Demo+project+for+Spring+Boot&amp;packageName=com.example.demo&amp;type=maven-project&amp;packaging=jar&amp;javaVersion=1.8&amp;language=java&amp;bootVersion=2.3.3.RELEASE&amp;dependencies=devtools&amp;dependencies=h2&amp;dependencies=data-jpa&amp;dependencies=security&amp;dependencies=thymeleaf&amp;dependencies=web</code></p>
 <h2 id="partie-1-bdd">Partie 1 BDD</h2>
@@ -1299,6 +1331,13 @@ public class SpringJpaBootstrap implements ApplicationListener&lt;ContextRefresh
           </div>
           <footer>
   
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
 
   <hr/>
 
@@ -1320,6 +1359,8 @@ public class SpringJpaBootstrap implements ApplicationListener&lt;ContextRefresh
   <div class="rst-versions" role="note" aria-label="versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
     
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>
