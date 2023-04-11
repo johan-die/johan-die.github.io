@@ -863,8 +863,23 @@ public interface CRUDService&lt;T&gt; {
 <p>Créer les trois classes (idem que ProductService)</p>
 </li>
 <li>
-<p>Completer UserServiceImpl</p>
+<p>Ajout de EncryptionService</p>
 </li>
+<li>
+<p>Implémenter EncryptionServiceImpl en utilisant org.jasypt.util.password.StrongPasswordEncryptor</p>
+</li>
+</ul>
+<pre><code class="java">package com.boot.services.security;
+
+public interface EncryptionService {
+    String encryptString(String input);
+    boolean checkPassword(String plainPassword, String encryptedPassword);
+}
+
+</code></pre>
+
+<ul>
+<li>Completer UserServiceImpl</li>
 </ul>
 <pre><code class="java">package com.boot.services;
 
@@ -1007,21 +1022,6 @@ public class CommonBeanConfig {
 </code></pre>
 
 <ul>
-<li>Ajout de EncryptionService</li>
-</ul>
-<pre><code class="java">package com.boot.services.security;
-
-public interface EncryptionService {
-    String encryptString(String input);
-    boolean checkPassword(String plainPassword, String encryptedPassword);
-}
-
-</code></pre>
-
-<ul>
-<li>
-<p>Implémenter EncryptionServiceImpl en utilisant org.jasypt.util.password.StrongPasswordEncryptor</p>
-</li>
 <li>
 <p>Spring Security fournit une interface UserDetailsService pour rechercher le nom d'utilisateur, le mot de passe et GrantedAuthorities pour tout utilisateur donné. Cette interface ne fournit qu'une seule méthode, loadUserByUsername (). Cette méthode renvoie une implémentation de l'interface UserDetails de Spring Security qui fournit des informations utilisateur.</p>
 </li>
