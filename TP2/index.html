@@ -168,7 +168,33 @@ CREATE TABLE  &quot;ORDERS&quot;
 <li>
 <p>Créer les repository associés.</p>
 </li>
+<li>
+<p>Ajouter des méthodes pour:</p>
+</li>
 </ul>
+<p>-- Trouver des agents par nom, trouver des agents à la commission plus grande que la valeur en paramètre, trouver des agents par Working Area</p>
+<p>-- Trouver des customers par nom, Trouver des customers par ville et Trouver des customers par <code>openingAtm</code> plus grand que le paramètre</p>
+<p>-- Trouver des orders par agent code et Trouver des orders par orderAmount plus grand que le paramètre</p>
+<ul>
+<li>
+<p>Créer des requètes de jointure pour chaque order récupérer les valeurs associées d'agent et customer </p>
+</li>
+<li>
+<p>Dans le controller y ajouter les méthodes de la même façon que pour les personnes et y binder toutes les méthodes.</p>
+</li>
+</ul>
+<h2 id="partie-3-optimisations">Partie 3 Optimisations</h2>
+<ul>
+<li>
+<p>remplacer pour les clés externes l'annotation <code>@column</code> par <code>@ManyToOne
+    @JoinColumn(
+     name="nom de la colonne", unique=false, nullable=false, updatable=true)</code> et remplacer le type du champ par l'objet voulu.</p>
+</li>
+<li>
+<p>Afficher la liste des orders. Que constatez vous? </p>
+</li>
+</ul>
+<h3 id="fin">Fin</h3>
               
             </div>
           </div>
