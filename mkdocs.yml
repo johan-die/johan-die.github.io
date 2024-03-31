@@ -1,0 +1,23 @@
+site_name: Quarkus
+nav:
+    - Home: index.md
+    - Workshop: Super-Heroes-Workshop.md
+   # - TP1: TP1.md
+   # - TP2: TP2.md
+#    - Projet: ProjetE-Commerce.md
+#    - Projet: Projet.md    
+#    - About: about.md
+#theme: readthedocs
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - content.code.select
+markdown_extensions:
+    - pymdownx.highlight:
+          anchor_linenums: true
+          line_spans: __span
+          pygments_lang_class: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.superfences
