@@ -848,7 +848,8 @@
 <h3 id="microservices">Microservices</h3>
 <p>Microservices are a software development technique — a variation of service-oriented architecture (SOA) — that structures an application as a set of loosely coupled services. Independent microservices communicate with each other using programming language-independent APIs.
 <img alt="compare" src="monolithic-vs-microservices.png" /></p>
-<p>REST APIs are often used to connect each microservices to the others. A noticeable advantage is that during a critical micriservice update, only the microservice containing this resource will be updated, the entire application remaining compatible with the modification, unlike the entire application in a classical architecture.</p>
+<p>REST APIs are often used to connect each microservice to the others.
+A noticeable advantage is that during a critical microservice update, only the microservice containing this resource will be updated, the entire application remaining compatible with the modification, unlike the entire application in a classical architecture.</p>
 <h3 id="rest">REST</h3>
 <p><strong>REST (Representational State Transfer)</strong> is an architectural style for designing networked applications. It relies on a stateless, client-server communication protocol, most commonly HTTP.</p>
 <p>In REST architecture, resources are represented by URIs (Uniform Resource Identifiers), and interactions with these resources are performed using standard HTTP methods:</p>
@@ -905,11 +906,11 @@
 </li>
 </ol>
 <p><strong>Conclusion</strong></p>
-<p>There are a lot more advantages than downsides. Moreover, there is no need to use Native compilation.</p>
-<p>In addition Quarkus as a few other frameworks implements the <a href="https://microprofile.io">Eclipse Microprofile specification</a> wich is a subset of the JEE specification tailored for cloud native application.</p>
-<p>Like legacy JEE frameworks, you can switch with almost no efforts to an other Microprofile implementation.</p>
+<p>There are lots more advantages than downsides. Moreover, there is no need to use Native compilation.</p>
+<p>In addition, Quarkus as a few other frameworks implements the <a href="https://microprofile.io">Eclipse Microprofile specification</a> which is a subset of the JEE specification tailored for cloud native application.</p>
+<p>Like legacy JEE frameworks, you can switch with almost no effort to another Microprofile implementation.</p>
 <h3 id="quarkus-web-configuration-tool">Quarkus web configuration tool</h3>
-<p>The site <a href="https://code.quarkus.io/">code.quarkus.io</a> allows you to generate all the project dependencies and creates the skeleton of the application.</p>
+<p>The site <a href="https://code.quarkus.io/">code.quarkus.io</a> allows you to generate all the project dependencies and create the skeleton of the application.</p>
 <p><img alt="initializr" src="initializr.png" /></p>
 <h2 id="hello-rest-world">Hello REST World</h2>
 <h3 id="prerequisites">Prerequisites</h3>
@@ -956,7 +957,7 @@
 <h3 id="docker-or-podman">Docker or Podman</h3>
 <p>Docker is a set of utilities that use OS-level virtualization to deliver software in packages called containers. Containers are isolated from one another and bundle their software, libraries, and configuration files; they can communicate with each other through well-defined channels.</p>
 <h4 id="installing-docker">Installing Docker</h4>
-<p>Quarkus use Testcontainers, and therefore also Docker, to ease the management of different technical services (database, monitoring…) during development. Our workshop also uses Docker to manage these services in a production-style deployment. So for this, we need to install <code>docker</code> and <code>docker compose</code> Installation instructions are available on the following page:</p>
+<p>Quarkus uses Testcontainers, and therefore also Docker, to ease the management of different technical services (database, monitoring…) during development. Our workshop also uses Docker to manage these services in a production-style deployment. So for this, we need to install <code>docker</code> and <code>docker compose</code> Installation instructions are available on the following page:</p>
 <ul>
 <li>Windows - <a href="https://docs.docker.com/docker-for-windows/install/">https://docs.docker.com/docker-for-windows/install/</a> (version 20+)</li>
 </ul>
@@ -1170,7 +1171,7 @@
 </span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>No main method is required, although it is possible to have it.</p>
-<p>Here the <code>@Path("/hello")</code> instanciate the class and create a GET (With <code>@GET</code>) REST endpoint <code>/hello</code> producing text (<code>@Produces(MediaType.TEXT_PLAIN)</code>) which is binded to the <code>hello()</code> method</p>
+<p>Here the <code>@Path("/hello")</code> instanciate the class and create a GET (With <code>@GET</code>) REST endpoint <code>/hello</code> producing text (<code>@Produces(MediaType.TEXT_PLAIN)</code>) which is bound to the <code>hello()</code> method</p>
 <h3 id="launching">Launching</h3>
 <p>Many ways:</p>
 <ul>
@@ -1207,16 +1208,18 @@
 </span></code></pre></div>
 <h2 id="concepts">Concepts</h2>
 <h3 id="dev-mode">Dev mode</h3>
-<p><a href="https://quarkus.io/guides/dev-mode-differences">Official Guide</a>
-* Offer a web UI to help the devlopper under <code>/q/dev</code> of your url.
-* Live reload of the application when a Rest call is made.
-* And many others: Swagger UI, Database imports, documentation,...</p>
+<p><a href="https://quarkus.io/guides/dev-mode-differences">Official Guide</a></p>
+<ul>
+<li>Offer a web UI to help the developer under <code>/q/dev</code> of your url.</li>
+<li>Live reload of the application when a Rest call is made.</li>
+<li>And many others: Swagger UI, Database imports, documentation, ...</li>
+</ul>
 <h3 id="configuration-profil">Configuration / Profil</h3>
 <p><a href="https://quarkus.io/guides/config-reference">Official Guide</a></p>
 <p>We often need to configure our application differently depending on the target environment. For example, the local development environment may be different from the production environment.</p>
 <p>Configuration Profiles allow for multiple configurations in the same file or separate files and select between them via a profile name.</p>
-<p>#### Default Profiles
-By default, Quarkus provides three profiles, that activate automatically in certain conditions:</p>
+<p>#### Default Profiles</p>
+<p>By default, Quarkus provides three profiles that activate automatically in certain conditions:</p>
 <ul>
 <li>
 <p><strong>dev</strong> - Activated when in development mode (i.e. quarkus:dev)</p>
@@ -1240,7 +1243,7 @@ By default, Quarkus provides three profiles, that activate automatically in cert
 </span></code></pre></div>
 <h3 id="cdi">CDI</h3>
 <p><a href="https://quarkus.io/guides/cdi-reference">Official Guide</a></p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nd">@ApplicationScoped</span><span class="w"> </span><span class="c1">//Instanciate the class</span>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nd">@ApplicationScoped</span><span class="w"> </span><span class="c1">//new Instance of the class</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CounterBean</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
 </span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="nd">@Inject</span><span class="w"> </span><span class="c1">//  A package-private injection field</span>
