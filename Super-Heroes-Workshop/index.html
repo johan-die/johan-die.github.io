@@ -4635,6 +4635,7 @@ az account show</code></pre></div></td></tr></tbody></table>
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>lsof<span class="w"> </span>-i<span class="w"> </span>tcp:2181<span class="w">    </span><span class="c1"># Zookeeper</span>
 </span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>lsof<span class="w"> </span>-i<span class="w"> </span>tcp:9092<span class="w">    </span><span class="c1"># Kafka</span>
 </span></code></pre></div>
+<p>For windows : <code>netstat -ano |findstr :8080</code></p>
 <h4 id="ready">Ready?</h4>
 <p>After the prerequisites have been installed and the environment has been checked, it’s now time to write some code!</p>
 <h2 id="creating-a-classical-resthttp-microservice">Creating a <em>classical</em> REST/HTTP Microservice</h2>
@@ -4671,13 +4672,7 @@ az account show</code></pre></div></td></tr></tbody></table>
 <p>First thing first, we need a project. That’s what you are going to see in this section.</p>
 <h4 id="bootstrapping-the-villain-rest-endpoint">Bootstrapping the Villain REST Endpoint</h4>
 <p>The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin. Open a terminal and run the following command under the <code>quarkus-workshop-super-heroes/super-heroes</code> directory:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>-DplatformVersion<span class="o">=</span><span class="m">3</span>.9.1<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>-DprojectGroupId<span class="o">=</span>io.quarkus.workshop.super-heroes<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span>-DprojectArtifactId<span class="o">=</span>rest-villains<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.villain.VillainResource&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/villains&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span>-Dextensions<span class="o">=</span><span class="s2">&quot;resteasy-reactive-jackson&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w"> </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w">   </span>-<span class="s2">&quot;DprojectArtifactId=rest-villains&quot;</span><span class="w"> </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.villain.VillainResource&quot;</span><span class="w"> </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/villains&quot;</span><span class="w">   </span>-Dextensions<span class="o">=</span><span class="s2">&quot;resteasy-reactive-jackson&quot;</span>
 </span></code></pre></div>
 <table><tbody><tr><td><i title="Note"></i></td><td><p>Notice that we scaffold the project with a reactive implementation of RestEasy (<code>resteasy-reactive-jackson</code>). This is the recommended way to develop REST applications with Quarkus even if we use the imperative programming model in the Villain microservice.</p></td></tr></tbody></table>
 
@@ -4770,11 +4765,11 @@ az account show</code></pre></div></td></tr></tbody></table>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
 </span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
 </span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">      </span><span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">      </span><span class="nt">&lt;artifactId&gt;</span>quarkus-resteasy-reactive<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">      </span><span class="nt">&lt;artifactId&gt;</span>quarkus-rest<span class="nt">&lt;/artifactId&gt;</span>
 </span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
 </span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
 </span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">      </span><span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">      </span><span class="nt">&lt;artifactId&gt;</span>quarkus-resteasy-reactive-jackson<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">      </span><span class="nt">&lt;artifactId&gt;</span>quarkus-rest-jackson<span class="nt">&lt;/artifactId&gt;</span>
 </span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
 </span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">    </span><span class="cm">&lt;!-- ... --&gt;</span>
 </span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="nt">&lt;/dependencies&gt;</span>
@@ -6391,13 +6386,7 @@ az account show</code></pre></div></td></tr></tbody></table>
 <h3 id="hero-microservice">Hero Microservice</h3>
 <p>New microservice, new project!</p>
 <p>The easiest way to create this new Quarkus project is to use the Quarkus Maven plugin. Open a terminal and run the following command under the <code>quarkus-workshop-super-heroes/super-heroes</code> directory</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="w">    </span>-DplatformVersion<span class="o">=</span><span class="m">3</span>.9.1<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="w">    </span>-DprojectGroupId<span class="o">=</span>io.quarkus.workshop.super-heroes<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="w">    </span>-DprojectArtifactId<span class="o">=</span>rest-heroes<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a><span class="w">    </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.hero.HeroResource&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a><span class="w">    </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/heroes&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-59-7"><a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a><span class="w">    </span>-Dextensions<span class="o">=</span><span class="s2">&quot;resteasy-reactive-jackson,quarkus-hibernate-validator,quarkus-smallrye-openapi,quarkus-hibernate-reactive-panache,quarkus-reactive-pg-client&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w">   </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w">  </span>-<span class="s2">&quot;DprojectArtifactId=rest-heroes&quot;</span><span class="w"> </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.hero.HeroResource&quot;</span><span class="w"> </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/heroes&quot;</span><span class="w">   </span>-Dextensions<span class="o">=</span><span class="s2">&quot;resteasy-reactive-jackson,quarkus-hibernate-validator,quarkus-smallrye-openapi,quarkus-hibernate-reactive-panache,quarkus-reactive-pg-client&quot;</span>
 </span></code></pre></div>
 <p>As you can see, we can select multiple extensions during the project creation:</p>
 <ul>
@@ -6975,13 +6964,7 @@ az account show</code></pre></div></td></tr></tbody></table>
 <h4 id="bootstrapping-the-fight-rest-endpoint">Bootstrapping the Fight REST Endpoint</h4>
 <p>Like for the Hero and Villain API, the easiest way to create this new Quarkus project is to use a Maven archetype. Under the <code>quarkus-workshop-super-heroes/super-heroes</code> root directory where you have all your code.</p>
 <p>Open a terminal and run the following command:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a><span class="w">  </span>-DplatformVersion<span class="o">=</span><span class="m">3</span>.9.1<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-70-3"><a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a><span class="w">  </span>-DprojectGroupId<span class="o">=</span>io.quarkus.workshop.super-heroes<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-70-4"><a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a><span class="w">  </span>-DprojectArtifactId<span class="o">=</span>rest-fights<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-70-5"><a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a><span class="w">  </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.fight.FightResource&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-70-6"><a id="__codelineno-70-6" name="__codelineno-70-6" href="#__codelineno-70-6"></a><span class="w">  </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/fights&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-70-7"><a id="__codelineno-70-7" name="__codelineno-70-7" href="#__codelineno-70-7"></a><span class="w">  </span>-Dextensions<span class="o">=</span><span class="s2">&quot;jdbc-postgresql,hibernate-orm-panache,hibernate-validator,quarkus-resteasy-reactive-jackson,smallrye-openapi,kafka&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w"> </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectArtifactId=rest-fights&quot;</span><span class="w"> </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.fight.FightResource&quot;</span><span class="w"> </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/fights&quot;</span><span class="w">  </span>-Dextensions<span class="o">=</span><span class="s2">&quot;jdbc-postgresql,hibernate-orm-panache,hibernate-validator,quarkus-rest-jackson,smallrye-openapi,kafka&quot;</span>
 </span></code></pre></div>
 <p>If you open the <code>pom.xml</code> file, you will see that the following extensions have been imported:</p>
 <ul>
@@ -6995,10 +6978,10 @@ az account show</code></pre></div></td></tr></tbody></table>
 <p><code>io.quarkus:quarkus-smallrye-openapi</code></p>
 </li>
 <li>
-<p><code>io.quarkus:quarkus-smallrye-reactive-messaging-kafka</code></p>
+<p><code>io.quarkus:quarkus-messaging-kafka</code></p>
 </li>
 <li>
-<p><code>io.quarkus:quarkus-resteasy-reactive-jackson</code></p>
+<p><code>io.quarkus:quarkus-rest-jackson</code></p>
 </li>
 <li>
 <p><code>io.quarkus:quarkus-jdbc-postgresql</code></p>
@@ -8269,13 +8252,7 @@ import org.eclipse.microprofile.faulttolerance.Timeout;</code></pre></div></td><
 <h3 id="narration-microservice">Narration Microservice</h3>
 <p>Let’s create a new microservice that will use Semantic Kernel to narrate the fight between a superhero and a super villain. New microservice, new project!</p>
 <p>As before, the easiest way to create this new Quarkus project is to use the Quarkus Maven plugin (you can also go to <a href="https://code.quarkus.io/">https://code.quarkus.io</a> if you prefer). Open a terminal and run the following command under the <code>quarkus-workshop-super-heroes/super-heroes</code> directory:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-118-1"><a id="__codelineno-118-1" name="__codelineno-118-1" href="#__codelineno-118-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-118-2"><a id="__codelineno-118-2" name="__codelineno-118-2" href="#__codelineno-118-2"></a><span class="w">    </span>-DplatformVersion<span class="o">=</span><span class="m">3</span>.9.1<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-118-3"><a id="__codelineno-118-3" name="__codelineno-118-3" href="#__codelineno-118-3"></a><span class="w">    </span>-DprojectGroupId<span class="o">=</span>io.quarkus.workshop.super-heroes<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-118-4"><a id="__codelineno-118-4" name="__codelineno-118-4" href="#__codelineno-118-4"></a><span class="w">    </span>-DprojectArtifactId<span class="o">=</span>rest-narration<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-118-5"><a id="__codelineno-118-5" name="__codelineno-118-5" href="#__codelineno-118-5"></a><span class="w">    </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.narration.NarrationResource&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-118-6"><a id="__codelineno-118-6" name="__codelineno-118-6" href="#__codelineno-118-6"></a><span class="w">    </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/narration&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-118-7"><a id="__codelineno-118-7" name="__codelineno-118-7" href="#__codelineno-118-7"></a><span class="w">    </span>-Dextensions<span class="o">=</span><span class="s2">&quot;resteasy-reactive-jackson,quarkus-smallrye-openapi,quarkus-smallrye-fault-tolerance&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-118-1"><a id="__codelineno-118-1" name="__codelineno-118-1" href="#__codelineno-118-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w">    </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w">   </span>-<span class="s2">&quot;DprojectArtifactId=rest-narration&quot;</span><span class="w">    </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.narration.NarrationResource&quot;</span><span class="w">    </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/narration&quot;</span><span class="w">   </span>-Dextensions<span class="o">=</span><span class="s2">&quot;resteasy-reactive-jackson,quarkus-smallrye-openapi,quarkus-smallrye-fault-tolerance&quot;</span>
 </span></code></pre></div>
 <p>This microservice needs less dependencies than the previous ones:</p>
 <ul>
@@ -8877,12 +8854,12 @@ import org.eclipse.microprofile.faulttolerance.Timeout;</code></pre></div></td><
 <p><img alt="Diagram" src="../Quarkus%20Super-Heroes%20Workshop%202024-03-11%20Quarkus%203.6.0/diag-plantuml-md5-9e91c56d3735dd8a4cff29f7dca44466.png" /></p>
 <h4 id="adding-the-reactive-messaging-dependency">Adding the Reactive Messaging Dependency</h4>
 <p>The Kafka extension was already imported during the project creation. In doubt, you can run in the Fight microservice:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-141-1"><a id="__codelineno-141-1" name="__codelineno-141-1" href="#__codelineno-141-1"></a>./mvnw quarkus:add-extension -Dextensions=&quot; io.quarkus:quarkus-smallrye-reactive-messaging-kafka&quot;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-141-1"><a id="__codelineno-141-1" name="__codelineno-141-1" href="#__codelineno-141-1"></a>./mvnw quarkus:add-extension -Dextensions=&quot; io.quarkus:quarkus-messaging-kafka&quot;
 </span></code></pre></div>
 <p>The previous command adds the following dependency:</p>
 <div class="language-xml highlight"><pre><span></span><code><span id="__span-142-1"><a id="__codelineno-142-1" name="__codelineno-142-1" href="#__codelineno-142-1"></a><span class="nt">&lt;dependency&gt;</span>
 </span><span id="__span-142-2"><a id="__codelineno-142-2" name="__codelineno-142-2" href="#__codelineno-142-2"></a><span class="w">  </span><span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
-</span><span id="__span-142-3"><a id="__codelineno-142-3" name="__codelineno-142-3" href="#__codelineno-142-3"></a><span class="w">  </span><span class="nt">&lt;artifactId&gt;</span>quarkus-smallrye-reactive-messaging-kafka<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-142-3"><a id="__codelineno-142-3" name="__codelineno-142-3" href="#__codelineno-142-3"></a><span class="w">  </span><span class="nt">&lt;artifactId&gt;</span>quarkus-messaging-kafka<span class="nt">&lt;/artifactId&gt;</span>
 </span><span id="__span-142-4"><a id="__codelineno-142-4" name="__codelineno-142-4" href="#__codelineno-142-4"></a><span class="nt">&lt;/dependency&gt;</span>
 </span></code></pre></div>
 <p>If not yet started, start the microservice using <code>./mvnw quarkus:dev</code>.</p>
@@ -8920,13 +8897,7 @@ import org.eclipse.microprofile.reactive.messaging.Emitter;</code></pre></div></
 <h4 id="bootstrapping-the-statistics-rest-endpoint">Bootstrapping the Statistics REST Endpoint</h4>
 <p>Like for the other microservice, the easiest way to create this new Quarkus project is to use a Maven command. Under the <code>quarkus-workshop-super-heroes/super-heroes</code> root directory where you have all your code.</p>
 <p>Open a terminal and run the following command:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-147-1"><a id="__codelineno-147-1" name="__codelineno-147-1" href="#__codelineno-147-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-147-2"><a id="__codelineno-147-2" name="__codelineno-147-2" href="#__codelineno-147-2"></a><span class="w">    </span>-DplatformVersion<span class="o">=</span><span class="m">3</span>.9.1<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-147-3"><a id="__codelineno-147-3" name="__codelineno-147-3" href="#__codelineno-147-3"></a><span class="w">    </span>-DprojectGroupId<span class="o">=</span>io.quarkus.workshop.super-heroes<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-147-4"><a id="__codelineno-147-4" name="__codelineno-147-4" href="#__codelineno-147-4"></a><span class="w">    </span>-DprojectArtifactId<span class="o">=</span>event-statistics<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-147-5"><a id="__codelineno-147-5" name="__codelineno-147-5" href="#__codelineno-147-5"></a><span class="w">    </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.statistics.StatisticResource&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-147-6"><a id="__codelineno-147-6" name="__codelineno-147-6" href="#__codelineno-147-6"></a><span class="w">    </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/stats&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-147-7"><a id="__codelineno-147-7" name="__codelineno-147-7" href="#__codelineno-147-7"></a><span class="w">    </span>-Dextensions<span class="o">=</span><span class="s2">&quot;kafka, resteasy-reactive-jackson, websockets&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-147-1"><a id="__codelineno-147-1" name="__codelineno-147-1" href="#__codelineno-147-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w">    </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectArtifactId=event-statistics&quot;</span><span class="w"> </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.statistics.StatisticResource&quot;</span><span class="w">   </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/stats&quot;</span><span class="w"> </span>-Dextensions<span class="o">=</span><span class="s2">&quot;kafka, resteasy-reactive-jackson, websockets&quot;</span>
 </span></code></pre></div>
 <p>If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the <code>&lt;modules&gt;</code> section:</p>
 <div class="language-xml highlight"><pre><span></span><code><span id="__span-148-1"><a id="__codelineno-148-1" name="__codelineno-148-1" href="#__codelineno-148-1"></a><span class="nt">&lt;module&gt;</span>super-heroes/event-statistics<span class="nt">&lt;/module&gt;</span>
