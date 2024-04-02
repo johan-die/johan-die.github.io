@@ -6272,7 +6272,7 @@ az account show</code></pre></div></td></tr></tbody></table>
 <h3 id="quarkus-augmentation">Quarkus Augmentation</h3>
 <p>Let’s demystify all this.</p>
 <p>So far, you have developed the super-villains microservice. This microservice is relatively simple. It still has database access, ORM support, transaction, JSON serialization, and deserialization.</p>
-<p>Let’s now package this application using:</p>
+<p>Let’s now package this application using: <code>mvnw package</code></p>
 <p>In the log, you can see actions happening during what Quarkus calls the <em>augmentation</em> phase.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>[INFO] --- quarkus-maven-plugin:3.9.1:build (default) @ rest-villains ---
 </span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>[INFO] [org.jboss.threads] JBoss Threads version 3.4.2.Final
