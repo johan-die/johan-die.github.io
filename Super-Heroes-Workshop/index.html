@@ -2256,6 +2256,26 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exam.mdmkd" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -4672,16 +4692,16 @@ az account show</code></pre></div></td></tr></tbody></table>
 <p>First thing first, we need a project. That’s what you are going to see in this section.</p>
 <h4 id="bootstrapping-the-villain-rest-endpoint">Bootstrapping the Villain REST Endpoint</h4>
 <p>The easiest way to create a new Quarkus project is to use the Quarkus Maven plugin. Open a terminal and run the following command under the <code>quarkus-workshop-super-heroes/super-heroes</code> directory:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w"> </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w">   </span>-<span class="s2">&quot;DprojectArtifactId=rest-villains&quot;</span><span class="w"> </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.villain.VillainResource&quot;</span><span class="w"> </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/villains&quot;</span><span class="w">   </span>-Dextensions<span class="o">=</span><span class="s2">&quot;resteasy-reactive-jackson&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w"> </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w">   </span>-<span class="s2">&quot;DprojectArtifactId=rest-villains&quot;</span><span class="w"> </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.villain.VillainResource&quot;</span><span class="w"> </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/villains&quot;</span><span class="w">   </span>-Dextensions<span class="o">=</span><span class="s2">&quot;rest-jackson&quot;</span>
 </span></code></pre></div>
-<table><tbody><tr><td><i title="Note"></i></td><td><p>Notice that we scaffold the project with a reactive implementation of RestEasy (<code>resteasy-reactive-jackson</code>). This is the recommended way to develop REST applications with Quarkus even if we use the imperative programming model in the Villain microservice.</p></td></tr></tbody></table>
+<table><tbody><tr><td><i title="Note"></i></td><td><p>Notice that we scaffold the project with a reactive implementation of RestEasy (<code>rest-jackson</code>). This is the recommended way to develop REST applications with Quarkus even if we use the imperative programming model in the Villain microservice.</p></td></tr></tbody></table>
 
 <p>Remember that <code>mvnw</code> is the maven wrapper. It behaves like <code>mvn</code>, but allows a project’s build dependencies to be encapsulated.</p>
-<p>The last line selects the extension we want to use. As a start, we only select <code>resteasy-reactive-jackson</code>, which will also import <code>resteasy-reactive</code>.</p>
+<p>The last line selects the extension we want to use. As a start, we only select <code>rest-jackson</code>, which will also import <code>rest</code>.</p>
 <p>If you want your IDE to manage this new Maven project, you can declare it in the parent POM (<code>quarkus-super-heroes/pom.xml</code>) by adding this new module in the <code>&lt;modules&gt;</code> section:</p>
 <div class="language-xml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">&lt;module&gt;</span>super-heroes/rest-villains<span class="nt">&lt;/module&gt;</span>
 </span></code></pre></div>
-<table><tbody><tr><td><i title="Tip"></i></td><td><p>Prefer a Web UI?</p><p>Instead of the Maven command, you can use <a href="https://code.quarkus.io/">https://code.quarkus.io</a> and select the <code>resteasy-reactive-jackson</code> extension.</p></td></tr></tbody></table>
+<table><tbody><tr><td><i title="Tip"></i></td><td><p>Prefer a Web UI?</p><p>Instead of the Maven command, you can use <a href="https://code.quarkus.io/">https://code.quarkus.io</a> and select the <code>rest-jackson</code> extension.</p></td></tr></tbody></table>
 
 <h4 id="directory-structure">Directory Structure</h4>
 <p>Once you bootstrap the project, you get the following directory structure with a few Java classes and other artifacts :</p>
@@ -4757,7 +4777,7 @@ az account show</code></pre></div></td></tr></tbody></table>
 </span><span id="__span-9-47"><a id="__codelineno-9-47" name="__codelineno-9-47" href="#__codelineno-9-47"></a><span class="cm">&lt;!-- ... --&gt;</span>
 </span><span id="__span-9-48"><a id="__codelineno-9-48" name="__codelineno-9-48" href="#__codelineno-9-48"></a><span class="nt">&lt;/project&gt;</span>
 </span></code></pre></div>
-<p>If we focus on the dependencies section, you can see the extensions allowing the development of REST applications (resteasy-reactive and resteasy-reactive-jackson)</p>
+<p>If we focus on the dependencies section, you can see the extensions allowing the development of REST applications (rest and rest-jackson)</p>
 <div class="language-xml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">&lt;dependencies&gt;</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">      </span><span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
@@ -4779,10 +4799,10 @@ az account show</code></pre></div></td></tr></tbody></table>
 <p><code>quarkus-arc</code> is the dependency injection framework integrated into Quarkus. It’s designed to perform build-time injections. We will see later why this is essential for Quarkus.</p>
 </li>
 <li>
-<p><code>resteasy-reactive</code> is the framework we will use to implement our REST API. It uses JAX-RS annotations such as <code>@Path</code>, <code>@GET</code>…</p>
+<p><code>rest</code> is the framework we will use to implement our REST API. It uses JAX-RS annotations such as <code>@Path</code>, <code>@GET</code>…</p>
 </li>
 <li>
-<p><code>reasteasy-reactive-jackson</code> adds JSON object mapping capabilities to RESTEasy reactive.</p>
+<p><code>rest-jackson</code> adds JSON object mapping capabilities to RESTEasy reactive.</p>
 </li>
 </ul>
 <h4 id="the-villain-resource">The Villain Resource</h4>
@@ -4845,7 +4865,7 @@ az account show</code></pre></div></td></tr></tbody></table>
 </span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="m">2022</span>-11-15<span class="w"> </span><span class="m">14</span>:05:29,414<span class="w"> </span>INFO<span class="w">  </span><span class="o">[</span>io.quarkus<span class="o">]</span><span class="w"> </span><span class="o">(</span>Quarkus<span class="w"> </span>Main<span class="w"> </span>Thread<span class="o">)</span><span class="w"> </span>rest-villains<span class="w"> </span><span class="m">1</span>.0.0-SNAPSHOT<span class="w"> </span>on<span class="w"> </span>JVM<span class="w"> </span><span class="o">(</span>powered<span class="w"> </span>by<span class="w"> </span>Quarkus<span class="w"> </span><span class="m">3</span>.9.1<span class="o">)</span><span class="w"> </span>started<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span>.093s.<span class="w"> </span>Listening<span class="w"> </span>on:<span class="w"> </span>http://localhost:8080
 </span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>
 </span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="m">2022</span>-11-15<span class="w"> </span><span class="m">14</span>:05:29,423<span class="w"> </span>INFO<span class="w">  </span><span class="o">[</span>io.quarkus<span class="o">]</span><span class="w"> </span><span class="o">(</span>Quarkus<span class="w"> </span>Main<span class="w"> </span>Thread<span class="o">)</span><span class="w"> </span>Profile<span class="w"> </span>dev<span class="w"> </span>activated.<span class="w"> </span>Live<span class="w"> </span>Coding<span class="w"> </span>activated.
-</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="m">2022</span>-11-15<span class="w"> </span><span class="m">14</span>:05:29,423<span class="w"> </span>INFO<span class="w">  </span><span class="o">[</span>io.quarkus<span class="o">]</span><span class="w"> </span><span class="o">(</span>Quarkus<span class="w"> </span>Main<span class="w"> </span>Thread<span class="o">)</span><span class="w"> </span>Installed<span class="w"> </span>features:<span class="w"> </span><span class="o">[</span>cdi,<span class="w"> </span>resteasy-reactive,<span class="w"> </span>resteasy-reactive-jackson,<span class="w"> </span>smallrye-context-propagation,<span class="w"> </span>vertx<span class="o">]</span>
+</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="m">2022</span>-11-15<span class="w"> </span><span class="m">14</span>:05:29,423<span class="w"> </span>INFO<span class="w">  </span><span class="o">[</span>io.quarkus<span class="o">]</span><span class="w"> </span><span class="o">(</span>Quarkus<span class="w"> </span>Main<span class="w"> </span>Thread<span class="o">)</span><span class="w"> </span>Installed<span class="w"> </span>features:<span class="w"> </span><span class="o">[</span>cdi,<span class="w"> </span>rest,<span class="w"> </span>rest-jackson,<span class="w"> </span>smallrye-context-propagation,<span class="w"> </span>vertx<span class="o">]</span>
 </span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>
 </span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a>Tests<span class="w"> </span>paused
 </span><span id="__span-12-31"><a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a>Press<span class="w"> </span><span class="o">[</span>r<span class="o">]</span><span class="w"> </span>to<span class="w"> </span>resume<span class="w"> </span>testing,<span class="w"> </span><span class="o">[</span>o<span class="o">]</span><span class="w"> </span>Toggle<span class="w"> </span><span class="nb">test</span><span class="w"> </span>output,<span class="w"> </span><span class="o">[</span>:<span class="o">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>terminal,<span class="w"> </span><span class="o">[</span>h<span class="o">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>more<span class="w"> </span>options&gt;
@@ -5042,7 +5062,7 @@ az account show</code></pre></div></td></tr></tbody></table>
 <p>To add the required dependencies, just run the following command under the <code>super-heroes/rest-villains</code> directory:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>./mvnw<span class="w"> </span>quarkus:add-extension<span class="w"> </span>-Dextensions<span class="o">=</span><span class="s2">&quot;jdbc-postgresql,hibernate-orm-panache,hibernate-validator&quot;</span>
 </span></code></pre></div>
-<table><tbody><tr><td><i title="Tip"></i></td><td>No need to add an extension for JSON, we already included <code>resteasy-reactive-jackson</code>.</td></tr></tbody></table>
+<table><tbody><tr><td><i title="Tip"></i></td><td>No need to add an extension for JSON, we already included <code>rest-jackson</code>.</td></tr></tbody></table>
 
 <p>This will add the following dependencies in the <code>pom.xml</code> file:</p>
 <div class="language-xml highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nt">&lt;dependencies&gt;</span>
@@ -6386,12 +6406,12 @@ az account show</code></pre></div></td></tr></tbody></table>
 <h3 id="hero-microservice">Hero Microservice</h3>
 <p>New microservice, new project!</p>
 <p>The easiest way to create this new Quarkus project is to use the Quarkus Maven plugin. Open a terminal and run the following command under the <code>quarkus-workshop-super-heroes/super-heroes</code> directory</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w">   </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w">  </span>-<span class="s2">&quot;DprojectArtifactId=rest-heroes&quot;</span><span class="w"> </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.hero.HeroResource&quot;</span><span class="w"> </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/heroes&quot;</span><span class="w">   </span>-Dextensions<span class="o">=</span><span class="s2">&quot;resteasy-reactive-jackson,quarkus-hibernate-validator,quarkus-smallrye-openapi,quarkus-hibernate-reactive-panache,quarkus-reactive-pg-client&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w">   </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w">  </span>-<span class="s2">&quot;DprojectArtifactId=rest-heroes&quot;</span><span class="w"> </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.hero.HeroResource&quot;</span><span class="w"> </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/heroes&quot;</span><span class="w">   </span>-Dextensions<span class="o">=</span><span class="s2">&quot;rest-jackson,quarkus-hibernate-validator,quarkus-smallrye-openapi,quarkus-hibernate-reactive-panache,quarkus-reactive-pg-client&quot;</span>
 </span></code></pre></div>
 <p>As you can see, we can select multiple extensions during the project creation:</p>
 <ul>
 <li>
-<p><code>resteasy-reactive-jackson</code> provides RESTEasy Reactive and the ability to map JSON objects,</p>
+<p><code>rest-jackson</code> provides RESTEasy Reactive and the ability to map JSON objects,</p>
 </li>
 <li>
 <p><code>quarkus-hibernate-validator</code> provides the Hibernate Validator support,</p>
@@ -7600,12 +7620,12 @@ az account show</code></pre></div></td></tr></tbody></table>
 </ul>
 <h4 id="installing-the-reactive-rest-client-dependency">Installing the Reactive REST Client Dependency</h4>
 <p>To install the Reactive REST Client dependency, just run the following command in the Fight microservice:</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-85-1"><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a><span class="p">.</span><span class="o">/</span><span class="n">mvnw</span><span class="w"> </span><span class="n">quarkus</span><span class="p">:</span><span class="n">add</span><span class="o">-</span><span class="n">extension</span><span class="w"> </span><span class="o">-</span><span class="n">Dextensions</span><span class="o">=</span><span class="s">&quot;io.quarkus:quarkus-rest-client-reactive-jackson&quot;</span>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-85-1"><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a><span class="p">.</span><span class="o">/</span><span class="n">mvnw</span><span class="w"> </span><span class="n">quarkus</span><span class="p">:</span><span class="n">add</span><span class="o">-</span><span class="n">extension</span><span class="w"> </span><span class="o">-</span><span class="n">Dextensions</span><span class="o">=</span><span class="s">&quot;io.quarkus:quarkus-rest-client-jackson&quot;</span>
 </span></code></pre></div>
 <p>This will add the following dependency in the <code>pom.xml</code> file:</p>
 <div class="language-xml highlight"><pre><span></span><code><span id="__span-86-1"><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a><span class="nt">&lt;dependency&gt;</span>
 </span><span id="__span-86-2"><a id="__codelineno-86-2" name="__codelineno-86-2" href="#__codelineno-86-2"></a><span class="w">  </span><span class="nt">&lt;groupId&gt;</span>io.quarkus<span class="nt">&lt;/groupId&gt;</span>
-</span><span id="__span-86-3"><a id="__codelineno-86-3" name="__codelineno-86-3" href="#__codelineno-86-3"></a><span class="w">  </span><span class="nt">&lt;artifactId&gt;</span>quarkus-rest-client-reactive-jackson<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-86-3"><a id="__codelineno-86-3" name="__codelineno-86-3" href="#__codelineno-86-3"></a><span class="w">  </span><span class="nt">&lt;artifactId&gt;</span>quarkus-rest-client-jackson<span class="nt">&lt;/artifactId&gt;</span>
 </span><span id="__span-86-4"><a id="__codelineno-86-4" name="__codelineno-86-4" href="#__codelineno-86-4"></a><span class="nt">&lt;/dependency&gt;</span>
 </span></code></pre></div>
 <p>This dependency imports both the reactive rest client implementation and the JSON mapping support (which uses Jackson).</p>
@@ -8252,12 +8272,12 @@ import org.eclipse.microprofile.faulttolerance.Timeout;</code></pre></div></td><
 <h3 id="narration-microservice">Narration Microservice</h3>
 <p>Let’s create a new microservice that will use Semantic Kernel to narrate the fight between a superhero and a super villain. New microservice, new project!</p>
 <p>As before, the easiest way to create this new Quarkus project is to use the Quarkus Maven plugin (you can also go to <a href="https://code.quarkus.io/">https://code.quarkus.io</a> if you prefer). Open a terminal and run the following command under the <code>quarkus-workshop-super-heroes/super-heroes</code> directory:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-118-1"><a id="__codelineno-118-1" name="__codelineno-118-1" href="#__codelineno-118-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w">    </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w">   </span>-<span class="s2">&quot;DprojectArtifactId=rest-narration&quot;</span><span class="w">    </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.narration.NarrationResource&quot;</span><span class="w">    </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/narration&quot;</span><span class="w">   </span>-Dextensions<span class="o">=</span><span class="s2">&quot;resteasy-reactive-jackson,quarkus-smallrye-openapi,quarkus-smallrye-fault-tolerance&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-118-1"><a id="__codelineno-118-1" name="__codelineno-118-1" href="#__codelineno-118-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w">    </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w">   </span>-<span class="s2">&quot;DprojectArtifactId=rest-narration&quot;</span><span class="w">    </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.narration.NarrationResource&quot;</span><span class="w">    </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/narration&quot;</span><span class="w">   </span>-Dextensions<span class="o">=</span><span class="s2">&quot;resteasy-jackson,quarkus-smallrye-openapi,quarkus-smallrye-fault-tolerance&quot;</span>
 </span></code></pre></div>
 <p>This microservice needs less dependencies than the previous ones:</p>
 <ul>
 <li>
-<p><code>resteasy-reactive-jackson</code> provides RESTEasy Reactive and the ability to map JSON objects,</p>
+<p><code>resteasy-jackson</code> provides RESTEasy Reactive and the ability to map JSON objects,</p>
 </li>
 <li>
 <p><code>quarkus-smallrye-openapi</code> provides the OpenAPI descriptor support and the Swagger UI in the dev console,</p>
@@ -8854,7 +8874,7 @@ import org.eclipse.microprofile.faulttolerance.Timeout;</code></pre></div></td><
 <p><img alt="Diagram" src="../Quarkus%20Super-Heroes%20Workshop%202024-03-11%20Quarkus%203.6.0/diag-plantuml-md5-9e91c56d3735dd8a4cff29f7dca44466.png" /></p>
 <h4 id="adding-the-reactive-messaging-dependency">Adding the Reactive Messaging Dependency</h4>
 <p>The Kafka extension was already imported during the project creation. In doubt, you can run in the Fight microservice:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-141-1"><a id="__codelineno-141-1" name="__codelineno-141-1" href="#__codelineno-141-1"></a>./mvnw quarkus:add-extension -Dextensions=&quot; io.quarkus:quarkus-messaging-kafka&quot;
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-141-1"><a id="__codelineno-141-1" name="__codelineno-141-1" href="#__codelineno-141-1"></a>./mvnw<span class="w"> </span>quarkus:add-extension<span class="w"> </span>-Dextensions<span class="o">=</span><span class="s2">&quot; io.quarkus:quarkus-messaging-kafka&quot;</span>
 </span></code></pre></div>
 <p>The previous command adds the following dependency:</p>
 <div class="language-xml highlight"><pre><span></span><code><span id="__span-142-1"><a id="__codelineno-142-1" name="__codelineno-142-1" href="#__codelineno-142-1"></a><span class="nt">&lt;dependency&gt;</span>
@@ -8897,7 +8917,7 @@ import org.eclipse.microprofile.reactive.messaging.Emitter;</code></pre></div></
 <h4 id="bootstrapping-the-statistics-rest-endpoint">Bootstrapping the Statistics REST Endpoint</h4>
 <p>Like for the other microservice, the easiest way to create this new Quarkus project is to use a Maven command. Under the <code>quarkus-workshop-super-heroes/super-heroes</code> root directory where you have all your code.</p>
 <p>Open a terminal and run the following command:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-147-1"><a id="__codelineno-147-1" name="__codelineno-147-1" href="#__codelineno-147-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w">    </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectArtifactId=event-statistics&quot;</span><span class="w"> </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.statistics.StatisticResource&quot;</span><span class="w">   </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/stats&quot;</span><span class="w"> </span>-Dextensions<span class="o">=</span><span class="s2">&quot;kafka, resteasy-reactive-jackson, websockets&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-147-1"><a id="__codelineno-147-1" name="__codelineno-147-1" href="#__codelineno-147-1"></a>./mvnw<span class="w"> </span>io.quarkus:quarkus-maven-plugin:3.9.1:create<span class="w">    </span>-<span class="s2">&quot;DplatformVersion=3.9.1&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectGroupId=io.quarkus.workshop.super-heroes&quot;</span><span class="w"> </span>-<span class="s2">&quot;DprojectArtifactId=event-statistics&quot;</span><span class="w"> </span>-DclassName<span class="o">=</span><span class="s2">&quot;io.quarkus.workshop.superheroes.statistics.StatisticResource&quot;</span><span class="w">   </span>-Dpath<span class="o">=</span><span class="s2">&quot;api/stats&quot;</span><span class="w"> </span>-Dextensions<span class="o">=</span><span class="s2">&quot;kafka, resteasy-jackson, websockets&quot;</span>
 </span></code></pre></div>
 <p>If you want your IDE to manage this new Maven project, you can declare it in the parent POM by adding this new module in the <code>&lt;modules&gt;</code> section:</p>
 <div class="language-xml highlight"><pre><span></span><code><span id="__span-148-1"><a id="__codelineno-148-1" name="__codelineno-148-1" href="#__codelineno-148-1"></a><span class="nt">&lt;module&gt;</span>super-heroes/event-statistics<span class="nt">&lt;/module&gt;</span>
