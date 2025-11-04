@@ -1,0 +1,883 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../exam/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
+    
+    
+      
+        <title>Bonus - Quarkus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2a3383ac.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quarkus-challenge-advanced-topics-bonus-points" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Quarkus" class="md-header__button md-logo" aria-label="Quarkus" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Quarkus
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bonus
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Quarkus" class="md-nav__button md-logo" aria-label="Quarkus" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Quarkus
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Super-Heroes-Workshop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Workshop
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Exam
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Bonus
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bonus
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Introduction &amp; Organization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 Introduction &amp; Organization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-well-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      How We'll Work
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mission-1-real-time-dashboard-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Mission 1: Real-time Dashboard &amp; Monitoring
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Mission 1: Real-time Dashboard &amp; Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Scenario
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#your-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Your Demonstration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#research-guides" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Research &amp; Guides
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mission-2-secure-database-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Mission 2: Secure Database Credentials
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Mission 2: Secure Database Credentials">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-scenario_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Scenario
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#your-demonstration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Your Demonstration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#research-guides_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Research &amp; Guides
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mission-3-build-properties-dead-code-elimination-conditional-extentions" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Mission 3: Build Properties &amp; "Dead Code" Elimination &amp; Conditional extentions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Mission 3: Build Properties &amp; &#34;Dead Code&#34; Elimination &amp; Conditional extentions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-scenario_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Scenario
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#your-demonstration_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Your Demonstration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#research-guides_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Research &amp; Guides
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mission-4-surviving-the-load-load-shedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Mission 4: Surviving the Load (Load Shedding)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Mission 4: Surviving the Load (Load Shedding)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-scenario_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Scenario
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#your-demonstration_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Your Demonstration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#research-guides_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Research &amp; Guides
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Introduction &amp; Organization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 Introduction &amp; Organization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-well-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      How We'll Work
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mission-1-real-time-dashboard-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Mission 1: Real-time Dashboard &amp; Monitoring
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Mission 1: Real-time Dashboard &amp; Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Scenario
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#your-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Your Demonstration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#research-guides" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Research &amp; Guides
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mission-2-secure-database-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Mission 2: Secure Database Credentials
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Mission 2: Secure Database Credentials">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-scenario_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Scenario
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#your-demonstration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Your Demonstration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#research-guides_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Research &amp; Guides
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mission-3-build-properties-dead-code-elimination-conditional-extentions" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Mission 3: Build Properties &amp; "Dead Code" Elimination &amp; Conditional extentions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Mission 3: Build Properties &amp; &#34;Dead Code&#34; Elimination &amp; Conditional extentions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-scenario_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Scenario
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#your-demonstration_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Your Demonstration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#research-guides_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Research &amp; Guides
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mission-4-surviving-the-load-load-shedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Mission 4: Surviving the Load (Load Shedding)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Mission 4: Surviving the Load (Load Shedding)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-scenario_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Scenario
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#your-demonstration_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Your Demonstration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#research-guides_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Research &amp; Guides
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="quarkus-challenge-advanced-topics-bonus-points">Quarkus Challenge: Advanced Topics (Bonus Points!)</h1>
+<h2 id="introduction-organization">🚀 Introduction &amp; Organization</h2>
+<p>Welcome! Today's objective is to tackle concrete technical challenges in Quarkus as a team.</p>
+<h3 id="how-well-work">How We'll Work</h3>
+<ol>
+<li><strong>Form Groups:</strong> We will form 4 groups.</li>
+<li><strong>Assign Missions:</strong> Each group will be assigned one of the four missions listed below.</li>
+<li><strong>Objective:</strong> Your group must research, implement, and prepare a <em>live demonstration</em> of your solution.</li>
+<li><strong>Bonus Points:</strong> A successful demonstration that proves your concept works will earn you bonus points for the module.</li>
+</ol>
+<p>The goal is not just to follow a tutorial, but to <em>prove</em> a concept.</p>
+<p>Good luck!</p>
+<hr />
+<h2 id="mission-1-real-time-dashboard-monitoring">🎯 Mission 1: Real-time Dashboard &amp; Monitoring</h2>
+<h3 id="the-scenario">The Scenario</h3>
+<p>Your application needs to display real-time data on a dashboard (e.g., a "live feed"). At the same time, the SRE team wants to know <em>exactly</em> how many users are connected to this feed in real-time, via their monitoring system (Prometheus/Grafana).</p>
+<h3 id="your-demonstration">Your Demonstration</h3>
+<p>You must prove that you can:
+1.  Establish a real-time connection between the Quarkus backend and a simple front-end (an HTML/JS file is sufficient).
+2.  Create a metric (via Micrometer) that <em>automatically</em> increments/decrements when clients connect or disconnect.
+3.  <strong>The Proof:</strong> Show the web page receiving messages AND the Quarkus <code>/q/metrics</code> page where your custom metric (e.g., <code>active_users</code>) changes live.</p>
+<h3 id="research-guides">📚 Research &amp; Guides</h3>
+<ul>
+<li><a href="https://quarkus.io/guides/websockets-next-tutorial">Quarkus - Getting started with WebSockets Next</a></li>
+<li><a href="https://quarkus.io/guides/telemetry-micrometer">Quarkus - Micrometer Metrics</a></li>
+</ul>
+<hr />
+<h2 id="mission-2-secure-database-credentials">🎯 Mission 2: Secure Database Credentials</h2>
+<h3 id="the-scenario_1">The Scenario</h3>
+<p>Your application connects to a database. Currently, the <code>application.properties</code> file contains this, which is a major security flaw (especially if the file is on Git):</p>
+<div class="language-text highlight"><pre><span></span><code>quarkus.datasource.username=admin
+quarkus.datasource.password=ThisIsASecret!
+</code></pre></div>
+<h3 id="your-demonstration_1">Your Demonstration</h3>
+<p>You must refactor the application so that these credentials are <em>never</em> written in plain text in the configuration file again. The application must start and successfully connect to the database by fetching the credentials from an <em>external</em> source.</p>
+<ul>
+<li><strong>The Proof:</strong> Show us your <code>application.properties</code> file (it must no longer contain the secrets). Then, start the application and prove that it is correctly connected to the database (e.g., by calling an endpoint that performs a <code>SELECT</code>).</li>
+</ul>
+<h3 id="research-guides_1">📚 Research &amp; Guides</h3>
+<ul>
+<li><a href="https://quarkus.io/guides/credentials-provider">Quarkus - Using a Credentials Provider</a></li>
+<li><a href="https://quarkus.io/guides/security-jpa">Quarkus - Secure JPA</a> (Example of an external source)</li>
+<li><a href="https://quarkus.io/guides/security-overview">Quarkus - Security Overview</a></li>
+</ul>
+<hr />
+<h2 id="mission-3-build-properties-dead-code-elimination-conditional-extentions">🎯 Mission 3: Build Properties &amp; "Dead Code" Elimination &amp; Conditional extentions</h2>
+<h3 id="the-scenario_2">The Scenario</h3>
+<p>Quarkus claims to optimize applications at <em>build time</em>. We want to verify if this is true. If we "disable" a CDI bean using a build property, is that bean's code <em>actually</em> removed from the final JAR?
+Also explore Conditional extentions.</p>
+<h3 id="your-demonstration_2">Your Demonstration</h3>
+<p>You must:
+1.  Create a simple CDI bean (e.g., <code>@ApplicationScoped public class MyOptionalService</code>).
+2.  Make its activation conditional on a property (e.g., <code>@IfBuildProperty(name = "feature.X.enabled", stringValue = "true")</code>).
+3.  Build the application twice:
+    * <code>mvn clean package</code> (property absent = bean disabled)
+    * <code>mvn clean package -Dfeature.X.enabled=true</code> (bean enabled)</p>
+<ul>
+<li><strong>The Proof:</strong> Using a Java decompiler or by inspecting the contents of the <code>.jar</code> (in <code>target/quarkus-app/</code>), prove to us that the <code>MyOptionalService.class</code> file is physically absent from the JAR when the property is absent, and present in the other one.</li>
+</ul>
+<h3 id="research-guides_2">📚 Research &amp; Guides</h3>
+<ul>
+<li><a href="https://quarkus.io/guides/cdi-reference">Quarkus - Contexts and Dependency Injection</a> (Search for <code>@IfBuildProperty</code>)</li>
+<li><a href="https://quarkus.io/guides/conditional-extension-dependencies">Quarkus - Conditional Extension Dependencies</a></li>
+<li><a href="https://quarkus.io/guides/conditional-extension-dependencies">Quarkus conditional extentions</a></li>
+</ul>
+<hr />
+<h2 id="mission-4-surviving-the-load-load-shedding">🎯 Mission 4: Surviving the Load (Load Shedding)</h2>
+<h3 id="the-scenario_3">The Scenario</h3>
+<p>Your application works perfectly. But what happens if 10,000 users arrive at the same time? The application will saturate its threads and memory, and crash (a "cascading failure"). We want it to <em>survive</em>.</p>
+<h3 id="your-demonstration_3">Your Demonstration</h3>
+<p>You must:
+1.  Create a simple endpoint (e.g., one that takes a short <code>Thread.sleep(50)</code> to simulate work).
+2.  Use a load testing tool (k6, Gatling, wrk, JMeter...) to "attack" your application and make it crash or become extremely slow.
+3.  Enable and configure "Load Shedding" in Quarkus.
+4.  Re-run <em>exactly the same</em> load test.</p>
+<ul>
+<li><strong>The Proof:</strong> Show us the load test results <em>before</em> (the application slows down, response times explode, 500 errors appear). Then, show us the test <em>after</em>: the application remains stable, response times for accepted requests are good, and excess requests are <em>cleanly rejected</em> (with <code>503 Service Unavailable</code> errors).</li>
+</ul>
+<h3 id="research-guides_3">📚 Research &amp; Guides</h3>
+<ul>
+<li><a href="https://quarkus.io/guides/load-shedding-reference">Quarkus - Load Shedding Reference</a></li>
+<li><a href="https://quarkus.io/guides/smallrye-fault-tolerance">Quarkus - SmallRye Fault Tolerance</a> (General context)</li>
+<li><a href="https://quarkus.io/guides/performance-measure">Quarkus - Measuring Performance</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.select"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
